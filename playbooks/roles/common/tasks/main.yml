@@ -1,0 +1,21 @@
+---
+
+- name: Installing Common Packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - tar
+    - wget
+    - net-tools
+
+- name: Creating Zookeeper Group | {{ zookeeper_group }}
+  group:
+    name: "{{ zookeeper_group }}"
+    state: present
+
+- name: Creating Zookeeper User | {{ zookeeper_user }}
+  user:
+    name: "{{ zookeeper_user }}"
+    state: present
+    group: "{{ zookeeper_group }}"

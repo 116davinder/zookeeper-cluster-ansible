@@ -1,0 +1,13 @@
+---
+
+- name: Applying Common Tasks
+  hosts: zookeeper
+  roles:
+    - common
+    - common-jdk
+
+- name: Installing Zookeeper
+  gather_facts: true
+  hosts: zookeeper
+  roles:
+    - zookeeper-install

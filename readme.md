@@ -29,5 +29,10 @@ cd /home/vagrant/projects/playbooks
 ```
 ansible-playbook -i hosts/cluster-hosts.ini cluster-setup.yml
 ```
+
+* **STEP=5**
+```
+Monitoring System: https://github.com/116davinder/zooki
+```
 # Supported/Tested OS
 * CentOS/7

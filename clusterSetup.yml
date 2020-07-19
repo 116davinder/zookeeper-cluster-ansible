@@ -1,0 +1,39 @@
+---
+
+- hosts: clusterNodes
+  gather_facts: true
+  pre_tasks:
+    - name: Including system upgrade role
+      import_role:
+        name: systemUpgrade
+      when: systemUpgradeRequired
+
+    - name: Including java role
+      import_role:
+        name: java
+
+  roles:
+    - common
+    - install
+    - configure
+    - service
+
+- hosts: clusterNodes
+  gather_facts: false
+  serial: 1
+  tasks:
+    - name: Starting all nodes
+      import_role:
+        name: serviceState
+      vars:
+        serviceName: zookeeper
+        serviceState: started
+
+    - name: zookeeper Port Status
+      include_role:
+        name: portCheck
+      vars:
+        PortNumber: "{{ item }}"
+        PortStatus: started
+      loop:
+        - "{{ zookeeperClientPort }}"

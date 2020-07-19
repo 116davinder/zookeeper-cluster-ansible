@@ -1,8 +1,0 @@
----
-
-- name: Installing Java Packages | OpenJDK 1.8.0
-  yum:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - java-1.8.0-openjdk

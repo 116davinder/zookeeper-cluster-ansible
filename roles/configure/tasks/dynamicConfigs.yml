@@ -1,0 +1,8 @@
+---
+- name: Creating zookeeper configurations | {{ zookeeperConfigFile }}
+  template:
+    src: "{{ zookeeperConfigFile }}"
+    dest: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}/conf/{{ zookeeperConfigFile }}"
+    owner: "{{ zookeeperUser }}"
+    group: "{{ zookeeperGroup }}"
+  register: configStatus

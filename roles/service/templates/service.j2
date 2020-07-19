@@ -1,0 +1,19 @@
+[Unit]
+Description=Apache Zookeeper
+Requires=network.target
+After=network.target
+
+[Service]
+Type=forking
+User={{ zookeeperUser }}
+Group={{ zookeeperGroup }}
+
+Environment=ZOO_LOG_DIR={{ zookeeperLogDir }}
+
+ExecStart={{ zookeeperInstallDir }}/zookeeper/bin/zkServer.sh start {{ zookeeperInstallDir }}/zookeeper/conf/zoo.cfg
+ExecStop={{ zookeeperInstallDir }}/zookeeper/bin/zkServer.sh stop {{ zookeeperInstallDir }}/zookeeper/conf/zoo.cfg
+
+Restart=no
+
+[Install]
+WantedBy=multi-user.target

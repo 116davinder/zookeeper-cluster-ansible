@@ -1,0 +1,18 @@
+---
+
+- name: Creating installing dir | {{ zookeeperInstallDir }}
+  file:
+    path: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}"
+    recurse: true
+    state: directory
+
+- name: Creating zookeeper directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ zookeeperUser }}"
+    group: "{{ zookeeperGroup }}"
+    mode: 0775
+  loop:
+    - "{{ zookeeperDataDir }}"
+    - "{{ zookeeperLogDir }}"

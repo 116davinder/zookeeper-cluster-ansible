@@ -1,0 +1,12 @@
+---
+
+- hosts: clusterNodes:clusterAddNodes
+  gather_facts: false
+  tasks:
+    - name: Removing Old zookeeper files | {{ zookeeperInstallDir }}/zookeeper-{{ zookeeperOldVersion }}
+      file:
+        path: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperOldVersion }}"
+        state: absent
+      when:
+        - zookeeperOldVersion is defined
+        - zookeeperOldVersion is version(zookeeperVersion, '!=')

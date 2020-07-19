@@ -1,0 +1,57 @@
+---
+
+- hosts: clusterNodes:clusterAddNodes
+  gather_facts: true
+  roles:
+    - java
+    - common
+
+- hosts: clusterNodes:clusterAddNodes
+  gather_facts: true
+  tasks:
+    - name: installing latest version of Zookeeper
+      import_role:
+        name: install
+        tasks_from: download
+
+    - name: configuring latest Zookeeper version
+      import_role:
+        name: configure
+
+- hosts: localhost
+  become: false
+  gather_facts: false
+  tasks:
+    - name: Switching zookeeper Version to {{ zookeeperVersion }} on all nodes (Rolling fashion)
+      pause:
+        prompt: "Press enter to confirm or ctrl-c to cancel"
+
+- hosts: clusterNodes:clusterAddNodes
+  gather_facts: false
+  serial: 1
+  tasks:
+    - name: switching Zookeeper version to latest
+      import_role:
+        name: install
+        tasks_from: createSymlink
+
+    - name: updating systemd file if required
+      import_role:
+        name: service
+
+    - name: restarting all nodes
+      import_role:
+        name: serviceState
+      vars:
+        serviceName: zookeeper
+        serviceState: restarted
+
+    - name: zookeeper Port Status
+      include_role:
+        name: portCheck
+      vars:
+        PortNumber: "{{ item }}"
+        PortStatus: started
+      loop:
+        - "{{ zookeeperClientPort }}"
+        #- "{{ zookeeperNativeTransportPort }}"

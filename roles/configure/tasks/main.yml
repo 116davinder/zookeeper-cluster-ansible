@@ -1,0 +1,17 @@
+---
+
+- name: Adding Zookeeper ID File | {{ zookeeperDataDir }}/myid
+  template:
+    dest: "{{ zookeeperDataDir }}/myid"
+    src: myid
+
+- name: Creating zookeeper configurations
+  include_role:
+      name: configure
+      tasks_from: dynamicConfigs.yml
+  vars:
+    - zookeeperConfigFile: "{{ item }}"
+  loop:
+    - zoo.cfg
+    - log4j.properties
+    - java.env

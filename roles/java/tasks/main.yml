@@ -1,0 +1,12 @@
+---
+
+- name: checking java installation
+  raw: which java
+  register: javaRequired
+  ignore_errors: true
+  changed_when: false
+
+- include_tasks: install.yml
+  when: javaRequired is failed
+
+- include_tasks: setJavaHome.yml

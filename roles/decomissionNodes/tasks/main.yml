@@ -1,0 +1,43 @@
+---
+
+- name: Stoping zookeeper service
+  import_role:
+    name: serviceState
+  vars:
+    serviceName: zookeeper
+    serviceState: stopped
+  ignore_errors: true
+
+- name: zookeeper Port Status
+  include_role:
+    name: portCheck
+  vars:
+    PortNumber: "{{ item }}"
+    PortStatus: stopped
+  loop:
+    - "{{ zookeeperClientPort }}"
+
+- name: Removing data & log dirs related to installation
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "{{ zookeeperInstallDir }}/zookeeper"
+    - "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}"
+    - "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperOldVersion }}"
+    - "{{ zookeeperDataDir }}"
+    - "{{ zookeeperLogDir }}"
+
+- name: deleting zookeeper user
+  user:
+    name: "{{ zookeeperUser }}"
+    comment: zookeeper Default User
+    uid: "{{ zookeeperUserId }}"
+    group: "{{ zookeeperGroup }}"
+    state: absent
+
+- name: deleting zookeeper group
+  group:
+    name: "{{  zookeeperGroup }}"
+    gid: "{{ zookeeperGroupId }}"
+    state: absent

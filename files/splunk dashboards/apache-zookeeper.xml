@@ -1,0 +1,195 @@
+<form>
+  <label>Apache Zookeeper</label>
+  <description>It will be used to monitor apache zookeeper.</description>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="dropdown" token="env">
+      <label>Environment</label>
+      <fieldForLabel>environment</fieldForLabel>
+      <fieldForValue>environment</fieldForValue>
+      <search>
+        <query>index=kafka sourcetype=zookeeper | stats count by environment</query>
+        <earliest>-60m@m</earliest>
+        <latest>now</latest>
+      </search>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <choice value="*">All</choice>
+    </input>
+    <input type="time" token="zookeeper_time_token">
+      <label>Time Range</label>
+      <default>
+        <earliest>-60m@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Disk Usage</title>
+      <chart>
+        <search>
+          <query>index=kafka sourcetype=zookeeper command=disk environment=$env$ 
+| timechart latest(usedInGB) as usedInGB, latest(totalInGB) as totalInGB by host useother=false</query>
+          <earliest>$zookeeper_time_token.earliest$</earliest>
+          <latest>$zookeeper_time_token.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisEnd</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Current Leader</title>
+      <table>
+        <search>
+          <query>index=kafka sourcetype=zookeeper command=leader is_leader=true environment=$env$ | table _time, environment, host, is_leader | uniq environment | sort by _time | head 5</query>
+          <earliest>$zookeeper_time_token.earliest$</earliest>
+          <latest>$zookeeper_time_token.latest$</latest>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Zookeeper Latency Stats</title>
+      <chart>
+        <search>
+          <query>index=kafka sourcetype=zookeeper command=monitor environment=$env$ | timechart latest(max_latency) as max_latency, latest(avg_latency) as avg_latency by host useother=false</query>
+          <earliest>$zookeeper_time_token.earliest$</earliest>
+          <latest>$zookeeper_time_token.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisEnd</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="height">335</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Zookeeper Sync Stats (Leader Only)</title>
+      <chart>
+        <search>
+          <query>index=kafka sourcetype=zookeeper  command=monitor environment=$env$ | timechart latest(synced_followers) as synced_followers, latest(pending_syncs) as pending_syncs by host</query>
+          <earliest>$zookeeper_time_token.earliest$</earliest>
+          <latest>$zookeeper_time_token.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisEnd</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="height">337</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Zookeeper Counts</title>
+      <chart>
+        <search>
+          <query>index=kafka sourcetype=zookeeper command=monitor environment=$env$ | timechart latest(znode_count) as znode_count, latest(watch_count) as watch_count, latest(outstanding_requests) as outstanding_requests, latest(open_file_descriptor_count) as open_file_descriptor_count,latest(ephemerals_count) as ephemerals_count by host useother=false</query>
+          <earliest>$zookeeper_time_token.earliest$</earliest>
+          <latest>$zookeeper_time_token.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisEnd</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Zookeeper Watch Summary Stats</title>
+      <chart>
+        <search>
+          <query>index=kafka sourcetype=zookeeper environment=$env$ command=watch_summary
+| timechart latest(num_connections) as num_connections, latest(num_paths) as num_paths, latest(num_total_watches) as num_total_watches by host useother=false</query>
+          <earliest>$zookeeper_time_token.earliest$</earliest>
+          <latest>$zookeeper_time_token.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Zookeeper Client Connection Stats</title>
+      <table>
+        <search>
+          <query>index=kafka sourcetype=zookeeper environment=$env$ command=connections 
+| table host, connections{}.remote_socket_address connections{}.avg_latency connections{}.outstanding_requests connections{}.max_latency | head 3</query>
+          <earliest>$zookeeper_time_token.earliest$</earliest>
+          <latest>$zookeeper_time_token.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>

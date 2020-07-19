@@ -1,0 +1,10 @@
+---
+
+- name: Creating symlink to latest version | {{ zookeeperVersion }}
+  file:
+    src: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}"
+    dest: "{{ zookeeperInstallDir }}/zookeeper"
+    owner: "{{ zookeeperUser }}"
+    group: "{{ zookeeperGroup }}"
+    state: link
+  register: zookeeperSymlinkStatus

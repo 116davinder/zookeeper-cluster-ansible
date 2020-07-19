@@ -1,0 +1,1 @@
+{% set id = hostvars[inventory_hostname]['ansible_default_ipv4']['address'].split('.')[3] | int | abs %}{{ id }}

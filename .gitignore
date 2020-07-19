@@ -1,1 +1,5 @@
 .vagrant*
+*retry
+.ansible*
+*.vscode
+.*

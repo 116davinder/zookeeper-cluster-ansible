@@ -1,0 +1,6 @@
+---
+
+- name: Creating Service File | zookeeper
+  template:
+    src: service.j2
+    dest: /usr/lib/systemd/system/zookeeper.service

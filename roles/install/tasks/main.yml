@@ -1,0 +1,10 @@
+---
+
+- name: copy zookeeper tar
+  include_tasks: download.yml
+
+- name: Create zookeeper dir symlink
+  include_tasks: createSymlink.yml
+
+- name: Setting zookeeper version into profile.d
+  include_tasks: envSet.yml

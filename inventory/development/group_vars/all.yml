@@ -1,0 +1,34 @@
+---
+
+systemUpgradeRequired: false
+
+javaVersion: 8
+updateJava: false # only when you need to update java version
+
+useSystemFirewall: false
+
+zookeeperGroup: zookeeper
+zookeeperUser: zookeeper
+zookeeperGroupId: 6000
+zookeeperUserId: 6000
+
+zookeeperInstallDir: /opt
+zookeeperDataDir: "{{ zookeeperInstallDir }}/zookeeper-data"
+zookeeperLogDir: "{{ zookeeperInstallDir }}/zookeeper-logs"
+
+zookeeperXms: 256m
+zookeeperXmx: "{{ zookeeperXms }}"
+zookeeperTickTime: 2000
+zookeeperInitLimit: 5
+zookeeperSyncLimit: 2
+zookeeperMaxClientCnxns: 60
+zookeeperClientPort: 2181
+
+zookeeperVersion: 3.6.0
+zookeeperOldVersion: 3.5.5 # only used in removing old versions
+
+# use local tar only
+zookeeperTarLocation: "/home/davinderpal/apache-zookeeper-{{ zookeeperVersion }}-bin.tar.gz"
+
+# splunk monitoring
+zookeeperEnvironment: development

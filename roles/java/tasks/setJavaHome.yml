@@ -1,0 +1,6 @@
+---
+
+- name: removing /etc/profile.d/java.sh
+  file:
+    path: /etc/profile.d/java.sh
+    state: absent

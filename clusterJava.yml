@@ -1,0 +1,6 @@
+---
+
+- hosts: clusterNodes
+  gather_facts: true
+  roles:
+    - java

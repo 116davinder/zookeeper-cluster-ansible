@@ -1,0 +1,29 @@
+---
+
+- hosts: clusterNodes
+  gather_facts: true
+  serial: 1
+  tasks:
+    - include_role:
+        name: configure
+        tasks_from: dynamicConfigs
+      vars:
+        - zookeeperConfigFile: java.env
+
+    - name: Restarting all nodes
+      import_role:
+        name: serviceState
+      vars:
+        serviceName: zookeeper
+        serviceState: restarted
+      when: configStatus.changed
+
+    - name: zookeeper port status
+      include_role:
+        name: portCheck
+      vars:
+        PortNumber: "{{ item }}"
+        PortStatus: started
+      loop:
+        - "{{ zookeeperClientPort }}"
+      when: configStatus.changed

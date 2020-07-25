@@ -3,3 +3,5 @@
 .ansible*
 *.vscode
 .*
+terraform/*/*tfstate*
+terraform/*/.terraform

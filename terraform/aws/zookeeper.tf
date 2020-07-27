@@ -19,4 +19,5 @@ resource "aws_volume_attachment" "zookeeper_ebs_attach" {
   device_name = var.zookeeper_ebs_attach_location
   volume_id   = element(aws_ebs_volume.zookeeper.*.id, count.index)
   instance_id = element(aws_instance.zookeeper.*.id, count.index)
+  force_detach      = true
 }

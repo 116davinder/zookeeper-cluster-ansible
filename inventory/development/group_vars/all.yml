@@ -32,3 +32,8 @@ zookeeperTarLocation: "/home/davinderpal/apache-zookeeper-{{ zookeeperVersion }}
 
 # splunk monitoring
 zookeeperEnvironment: development
+
+# Only for AWS Based Cluster
+zookeeper_ebs_device: /dev/xvdc
+zookeeper_ebs_device_fs: xfs
+zookeeper_ebs_device_mount_location: /zookeeper

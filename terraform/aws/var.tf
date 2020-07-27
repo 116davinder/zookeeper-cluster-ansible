@@ -1,3 +1,9 @@
+variable env {
+  type        = string
+  default     = "development"
+  description = "environment name"
+}
+
 variable vpc_id {
   type = string
   default = "vpc-0935362fca368f01f"
@@ -29,7 +35,7 @@ variable zookeeper_nodes {
 variable zookeeper_volume_size {
   type        = number
   default     = 50
-  description = "how size of zookeeper ebs volume is required?"
+  description = "how much size of zookeeper ebs volume is required?"
 }
 
 variable zookeeper_ebs_attach_location {

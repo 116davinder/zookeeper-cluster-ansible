@@ -25,3 +25,15 @@ variable zookeeper_nodes {
   default     = 3
   description = "how many nodes of zookeeper cluster is required?"
 }
+
+variable zookeeper_volume_size {
+  type        = number
+  default     = 50
+  description = "how size of zookeeper ebs volume is required?"
+}
+
+variable zookeeper_ebs_attach_location {
+  type        = string
+  default     = "/dev/sdc"
+  description = "disk location in linux machine"
+}

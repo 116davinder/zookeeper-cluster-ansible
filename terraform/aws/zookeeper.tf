@@ -8,9 +8,11 @@ resource "aws_instance" "zookeeper" {
   vpc_security_group_ids  = ["${aws_security_group.zookeeper_sg.id}"]
   
   tags = {
-    Name = "zookeeper-${count.index}"
+    Name = "zookeeper-${var.env}-${count.index}"
+    Env = var.env
   }
-  availability_zone = data.aws_availability_zones.available.names[ count.index ]
+
+  availability_zone = data.aws_availability_zones.available.names[ count.index % length(data.aws_availability_zones.available.names) ]
   depends_on  = [aws_security_group.zookeeper_sg]
 }
 

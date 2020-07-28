@@ -26,6 +26,6 @@ data "aws_subnet" "public_subnet" {
     name   = "tag:type"
     values = ["public"]
   }
-  availability_zone = data.aws_availability_zones.available.names[ count.index ]
+  availability_zone = data.aws_availability_zones.available.names[ count.index % length(data.aws_availability_zones.available.names) ]
 
 }

@@ -1,5 +1,5 @@
 resource "aws_security_group" "zookeeper_sg" {
-  name        = "zookeeper-sg"
+  name        = "zookeeper-sg-${var.env}"
   description = "Allow Zookeeper traffic"
   vpc_id      = var.vpc_id
 
@@ -25,6 +25,7 @@ resource "aws_security_group" "zookeeper_sg" {
   }
 
   tags = {
-    Name = "zookeeper-sg"
+    Name = "zookeeper-sg-${var.env}"
+    Env  = var.env
   }
 }

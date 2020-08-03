@@ -1,3 +1,9 @@
+variable region {
+  type                    = string
+  default                 = "eu-central-1"
+  description             = "AWS Region"
+}
+
 variable env {
   type        = string
   default     = "development"
@@ -32,6 +38,12 @@ variable zookeeper_nodes {
   description = "how many nodes of zookeeper cluster is required?"
 }
 
+variable zookeeper_root_volume_size {
+  type                    = number
+  default                 = 10
+  description             = "how much size of zookeeper root volume is required?"
+}
+
 variable zookeeper_volume_size {
   type        = number
   default     = 50
@@ -42,4 +54,10 @@ variable zookeeper_ebs_attach_location {
   type        = string
   default     = "/dev/sdc"
   description = "disk location in linux machine"
+}
+
+variable ec2_cloudwatch_role {
+  type                    = string
+  default                 = "Zookeeper-CloudWatchAgentServerRole"
+  description             = "aws ec2 cloudwatch role"
 }

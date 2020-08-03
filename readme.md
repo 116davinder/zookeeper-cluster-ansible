@@ -36,7 +36,19 @@ add below lines to `/etc/hosts` file in all nodes.
 ansible-playbook -i inventory/development/cluster.ini clusterSetup.yml
 ```
 
-# **Production Environment Setup**
+## **Apache Zookeeper Playbooks**
+
+### **AWS Cloud PreSetup for cluster**
+It will enable following things on all nodes.
+
+1. `/zookeeper` mount point from ebs created by terraform.
+2. Install and configure `awslogs` agent for kafka-logs.
+3. Install python3 packages
+
+* Update Required vars in ```inventory/<environment>/group_vars/all.yml``` .
+* Update Required vars in ```inventory/<environment>/cluster.ini``` .
+
+```ansible-playbook -i inventory/<environment>/cluster.ini clusterAwsPreSetup.yml```
 
 ### **To start new cluster**
 * Update Required vars in ```inventory/<environment>/group_vars/all.yml``` .

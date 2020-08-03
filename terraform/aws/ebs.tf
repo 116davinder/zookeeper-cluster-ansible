@@ -6,6 +6,7 @@ resource "aws_ebs_volume" "zookeeper" {
   tags = {
     Name = "zookeeper-${var.env}-${count.index}"
     Env  = var.env
+    Owner = "Terraform"
   }
 
 }

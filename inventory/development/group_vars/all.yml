@@ -12,7 +12,7 @@ zookeeperUser: zookeeper
 zookeeperGroupId: 6000
 zookeeperUserId: 6000
 
-zookeeperInstallDir: /opt
+zookeeperInstallDir: /zookeeper
 zookeeperDataDir: "{{ zookeeperInstallDir }}/zookeeper-data"
 zookeeperLogDir: "{{ zookeeperInstallDir }}/zookeeper-logs"
 
@@ -34,6 +34,7 @@ zookeeperTarLocation: "/home/davinderpal/apache-zookeeper-{{ zookeeperVersion }}
 zookeeperEnvironment: development
 
 # Only for AWS Based Cluster
-zookeeper_ebs_device: /dev/xvdc
-zookeeper_ebs_device_fs: xfs
-zookeeper_ebs_device_mount_location: /zookeeper
+aws_zookeeper_ec2_region: "eu-central-1"
+aws_zookeeper_ebs_device: /dev/xvdc
+aws_zookeeper_ebs_device_fs: xfs
+aws_zookeeper_ebs_device_mount_location: /zookeeper

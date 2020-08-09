@@ -11,6 +11,7 @@ from socket import gethostname
 from datetime import datetime
 import json
 import sys
+import os.path
 
 class zooki:
     def __init__(self):
@@ -73,13 +74,13 @@ def main():
     commandPaths = ['connections', 'leader', 'watch_summary']
 
     z = zooki()
-    with open(sys.argv[2] + "disk.out", "w") as zMetricFile:
+    with open(os.path.join(sys.argv[2], "disk.out"), "w") as zMetricFile:
         zMetricFile.write(z.getStorageMetric())
 
     for command in commandPaths:
-        with open(sys.argv[2] + command + ".out", "w") as zMetricFile:
+        with open(os.path.join(sys.argv[2], command, ".out"), "w") as zMetricFile:
             zMetricFile.write(z.getZMetric(command))
 
-    with open(sys.argv[2] + "monitor.out", "w") as zMetricFile:
+    with open(os.path.join(sys.argv[2], "monitor.out"), "w") as zMetricFile:
         zMetricFile.write(z.getMonitorMetric())
 main()

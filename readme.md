@@ -60,10 +60,9 @@ It will enable following things on all nodes.
 
 ```ansible-playbook -i inventory/<environment>/cluster.ini clusterRollingRestart.yml```
 
-### **To add splunk monitoring to cluster**
-* add splunk rpms to `files` folder.
+### **To add custom metric exporter to cluster**
 
-```ansible-playbook -i inventory/<environment>/cluster.ini clusterSplunkMonitorSetup.yml```
+```ansible-playbook -i inventory/<environment>/cluster.ini clusterCustomMetricExporter.yml```
 
 ### **To update jvm settings of cluster**
 * Update Required vars in ```inventory/<environment>/group_vars/all.yml``` .

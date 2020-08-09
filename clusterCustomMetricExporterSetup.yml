@@ -1,0 +1,11 @@
+---
+
+# Command to check Cron: crontab -u root -l
+#Ansible: zookeeper metric collector
+#* * * * * python3 /zookeeper/zooki.py /zookeeper /zookeeper/zookeeper-logs/
+
+- hosts: clusterNodes
+  become: false
+  gather_facts: false
+  roles:
+    - customMetricExporter

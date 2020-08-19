@@ -1,0 +1,6 @@
+name: zookeeper-cluster-ansible
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: Iaac for Zookeeper

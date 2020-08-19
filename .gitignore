@@ -5,3 +5,6 @@
 .*
 terraform/*/*tfstate*
 terraform/*/.terraform
+pulumi/*.pyc
+pulumi/venv/
+pulumi/__pycache__

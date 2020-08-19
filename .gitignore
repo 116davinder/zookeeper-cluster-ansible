@@ -8,3 +8,6 @@ terraform/*/.terraform
 pulumi/*.pyc
 pulumi/venv/
 pulumi/__pycache__
+pulumi/*/*.pyc
+pulumi/*/venv
+pulumi/*/__pycache__

@@ -38,10 +38,14 @@ ansible-playbook -i inventory/development/cluster.ini clusterSetup.yml
 
 ## **Apache Zookeeper Playbooks**
 
-## **Cloud Infra Setup for Apache Zookeeper Using Terraform**
+## **Cloud Infra Using Terraform**
 
 * `terraform/aws`
 * `terraform/oci`
+
+## **Cloud Infra Using Pulumi**
+
+* `pulumi/aws`
 
 ### **AWS Cloud PreSetup for cluster**
 It will enable following things on all nodes.

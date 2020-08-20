@@ -1,5 +1,7 @@
 ---
 
+# Ref: https://github.com/newrelic/nri-zookeeper
+
 # NewRelic Infra Agent should be installed on all zookeeper nodes
 - hosts: clusterNodes
   become: true

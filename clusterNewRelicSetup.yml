@@ -1,0 +1,26 @@
+---
+
+# Ref: https://github.com/newrelic/nri-zookeeper
+
+# NewRelic Infra Agent should be installed on all zookeeper nodes
+- hosts: clusterNodes
+  become: true
+  gather_facts: true
+  vars:
+    zookeeper_nri_pulgin_version: 1.1
+  pre_tasks:
+    - name: checking newrelic infra agent status ( Redhat / CentOS )
+      shell: "set -o pipefail && rpm -qa | grep newrelic-infra"
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+      register: isNewRelicInfraInstalledYum
+
+    - name: checking newrelic infra agent status ( Ubuntu / Debain )
+      shell: "set -o pipefail && apt search newrelic-infra | grep newrelic-infra"
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+      register: isNewRelicInfraInstalledApt
+
+  roles:
+    - role: nri-zookeeper
+      when:
+        - isNewRelicInfraInstalledYum != '' or isNewRelicInfraInstalledApt != ''
+        - isNewRelicInfraInstalledYum is not skipped or isNewRelicInfraInstalledApt is not skipped

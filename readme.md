@@ -65,13 +65,18 @@ It will enable following things on all nodes.
 
 ```ansible-playbook -i inventory/<environment>/cluster.ini clusterSetup.yml```
 
+### **Monitoring Setup**
+* **To add custom metric exporter to cluster**
+
+```ansible-playbook -i inventory/<environment>/cluster.ini clusterCustomMetricExporter.yml```
+
+* **To add newrelic monitoring to cluster**
+
+```ansible-playbook -i inventory/<environment>/cluster.ini clusterNewRelicSetup.yml```
+
 ### **Rolling restart cluster**
 
 ```ansible-playbook -i inventory/<environment>/cluster.ini clusterRollingRestart.yml```
-
-### **To add custom metric exporter to cluster**
-
-```ansible-playbook -i inventory/<environment>/cluster.ini clusterCustomMetricExporter.yml```
 
 ### **To update jvm settings of cluster**
 * Update Required vars in ```inventory/<environment>/group_vars/all.yml``` .

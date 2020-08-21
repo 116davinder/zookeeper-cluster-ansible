@@ -1,1 +1,210 @@
-{"dashboard":{"id":YYYYYYY,"title":"Apache Zookeeper","description":"","icon":"bar-chart","created_at":"2019-08-16T08:29:31Z","updated_at":"2019-09-10T11:06:46Z","visibility":"all","editable":"editable_by_owner","ui_url":"https://insights.newrelic.com/accounts/XXXXXXX/dashboards/YYYYYYY","api_url":"https://api.newrelic.com/v2/dashboards/YYYYYYY","owner_email":"dpsangwal@gmail.com","metadata":{"version":1},"widgets":[{"visualization":"faceted_line_chart","layout":{"width":4,"height":3,"row":1,"column":1},"widget_id":11696005,"account_id":XXXXXXX,"data":[{"nrql":"SELECT latest(cpuPercent) FROM SystemSample TIMESERIES FACET `fullHostname` WHERE `fullHostname` LIKE  '%zoo%' LIMIT 100"}],"presentation":{"title":"System CPU Percentage","notes":null}},{"visualization":"faceted_line_chart","layout":{"width":4,"height":3,"row":1,"column":5},"widget_id":11696006,"account_id":XXXXXXX,"data":[{"nrql":"SELECT latest(memoryUsedBytes/memoryTotalBytes*100) FROM SystemSample TIMESERIES FACET `fullHostname` WHERE `fullHostname` LIKE '%zoo%' limit 100"}],"presentation":{"title":"System Memory Percentage","notes":null}},{"visualization":"faceted_line_chart","layout":{"width":4,"height":3,"row":1,"column":9},"widget_id":11696007,"account_id":XXXXXXX,"data":[{"nrql":"SELECT latest(diskUsedPercent) FROM StorageSample TIMESERIES FACET `fullHostname`, `mountPoint` WHERE `fullHostname` LIKE '%zoo%' AND `mountPoint` = '/zookeeper' LIMIT 100 SINCE 60 minutes ago"}],"presentation":{"title":"System Disk Used Percentage","notes":null}},{"visualization":"faceted_line_chart","layout":{"width":12,"height":4,"row":4,"column":1},"widget_id":11696008,"account_id":XXXXXXX,"data":[{"nrql":"SELECT latest(receiveBytesPerSecond/1000) as `receiveKiloBytesPerSecond`,latest(transmitBytesPerSecond/1000) as `transmitKiloBytesPerSecond` FROM NetworkSample TIMESERIES FACET `fullHostname` WHERE `fullHostname` LIKE '%zoo%' LIMIT 100"}],"presentation":{"title":"System Network Kilo Bytes/Sec","notes":null}},{"visualization":"event_table","layout":{"width":4,"height":4,"row":8,"column":1},"widget_id":11696009,"account_id":XXXXXXX,"data":[{"nrql":"SELECT server_state,hostname from ZookeeperSample WHERE server_state = 'leader' LIMIT 10"}],"presentation":{"title":"Zookeeper Current Leader ( Leader Only )","notes":null}},{"visualization":"faceted_line_chart","layout":{"width":4,"height":4,"row":8,"column":5},"widget_id":11696010,"account_id":XXXXXXX,"data":[{"nrql":"SELECT latest(followers) FROM ZookeeperSample FACET fullHostname TIMESERIES 1 minute  SINCE 1 hours ago"}],"presentation":{"title":"Number of Zookeeper Followers ( Leader only )","notes":null}},{"visualization":"faceted_line_chart","layout":{"width":4,"height":4,"row":8,"column":9},"widget_id":11696011,"account_id":XXXXXXX,"data":[{"nrql":"SELECT latest(pending_syncs) FROM ZookeeperSample FACET fullHostname TIMESERIES 1 minute  SINCE 1 hours ago"}],"presentation":{"title":"Number of Pendings Syncs ( Leader Only )","notes":null}},{"visualization":"faceted_line_chart","layout":{"width":4,"height":4,"row":12,"column":1},"widget_id":11696012,"account_id":XXXXXXX,"data":[{"nrql":"SELECT latest(max_latency) FROM ZookeeperSample FACET fullHostname TIMESERIES "}],"presentation":{"title":"Max Latency","notes":null}},{"visualization":"faceted_line_chart","layout":{"width":4,"height":4,"row":12,"column":5},"widget_id":11696013,"account_id":XXXXXXX,"data":[{"nrql":"SELECT latest(avg_latency) FROM ZookeeperSample FACET fullHostname TIMESERIES 1 minute  SINCE 1 hours ago"}],"presentation":{"title":"Average latency","notes":null}},{"visualization":"faceted_line_chart","layout":{"width":4,"height":4,"row":12,"column":9},"widget_id":11696014,"account_id":XXXXXXX,"data":[{"nrql":"SELECT latest(swapUsedBytes/1000000) FROM SystemSample TIMESERIES FACET `fullHostname` WHERE `fullHostname` LIKE  '%zookeeper%'"}],"presentation":{"title":"System Swap Used ( MB )","notes":null}},{"visualization":"faceted_line_chart","layout":{"width":12,"height":5,"row":16,"column":1},"widget_id":11696015,"account_id":XXXXXXX,"data":[{"nrql":"SELECT latest(watch_count),latest(outstanding_requests),latest(open_file_descriptor_count),latest(ephemerals_count),latest(znode_count) FROM ZookeeperSample FACET fullHostname TIMESERIES"}],"presentation":{"title":"Zookeeper Counts","notes":null}}],"filter":{"event_types":["ZookeeperSample","SystemSample","StorageSample"],"attributes":[]}}}
+{
+	"dashboard": {
+		"id": YYYYYYY,
+		"title": "Apache Zookeeper",
+		"description": "",
+		"icon": "bar-chart",
+		"created_at": "2019-08-16T08:29:31Z",
+		"updated_at": "2019-09-10T11:06:46Z",
+		"visibility": "all",
+		"editable": "editable_by_owner",
+		"ui_url": "https://insights.newrelic.com/accounts/XXXXXXX/dashboards/YYYYYYY",
+		"api_url": "https://api.newrelic.com/v2/dashboards/YYYYYYY",
+		"owner_email": "dpsangwal@gmail.com",
+		"metadata": {
+			"version": 1
+		},
+		"widgets": [{
+			"visualization": "faceted_line_chart",
+			"layout": {
+				"width": 4,
+				"height": 3,
+				"row": 1,
+				"column": 1
+			},
+			"widget_id": 11696005,
+			"account_id": XXXXXXX,
+			"data": [{
+				"nrql": "SELECT latest(cpuPercent) FROM SystemSample TIMESERIES FACET `fullHostname` WHERE `fullHostname` LIKE  '%zoo%' LIMIT 100"
+			}],
+			"presentation": {
+				"title": "System CPU Percentage",
+				"notes": null
+			}
+		}, {
+			"visualization": "faceted_line_chart",
+			"layout": {
+				"width": 4,
+				"height": 3,
+				"row": 1,
+				"column": 5
+			},
+			"widget_id": 11696006,
+			"account_id": XXXXXXX,
+			"data": [{
+				"nrql": "SELECT latest(memoryUsedBytes/memoryTotalBytes*100) FROM SystemSample TIMESERIES FACET `fullHostname` WHERE `fullHostname` LIKE '%zoo%' limit 100"
+			}],
+			"presentation": {
+				"title": "System Memory Percentage",
+				"notes": null
+			}
+		}, {
+			"visualization": "faceted_line_chart",
+			"layout": {
+				"width": 4,
+				"height": 3,
+				"row": 1,
+				"column": 9
+			},
+			"widget_id": 11696007,
+			"account_id": XXXXXXX,
+			"data": [{
+				"nrql": "SELECT latest(diskUsedPercent) FROM StorageSample TIMESERIES FACET `fullHostname`, `mountPoint` WHERE `fullHostname` LIKE '%zoo%' AND `mountPoint` = '/zookeeper' LIMIT 100 SINCE 60 minutes ago"
+			}],
+			"presentation": {
+				"title": "System Disk Used Percentage",
+				"notes": null
+			}
+		}, {
+			"visualization": "faceted_line_chart",
+			"layout": {
+				"width": 12,
+				"height": 4,
+				"row": 4,
+				"column": 1
+			},
+			"widget_id": 11696008,
+			"account_id": XXXXXXX,
+			"data": [{
+				"nrql": "SELECT latest(receiveBytesPerSecond/1000) as `receiveKiloBytesPerSecond`,latest(transmitBytesPerSecond/1000) as `transmitKiloBytesPerSecond` FROM NetworkSample TIMESERIES FACET `fullHostname` WHERE `fullHostname` LIKE '%zoo%' LIMIT 100"
+			}],
+			"presentation": {
+				"title": "System Network Kilo Bytes/Sec",
+				"notes": null
+			}
+		}, {
+			"visualization": "event_table",
+			"layout": {
+				"width": 4,
+				"height": 4,
+				"row": 8,
+				"column": 1
+			},
+			"widget_id": 11696009,
+			"account_id": XXXXXXX,
+			"data": [{
+				"nrql": "SELECT server_state,hostname from ZookeeperSample WHERE server_state = 'leader' LIMIT 10"
+			}],
+			"presentation": {
+				"title": "Zookeeper Current Leader ( Leader Only )",
+				"notes": null
+			}
+		}, {
+			"visualization": "faceted_line_chart",
+			"layout": {
+				"width": 4,
+				"height": 4,
+				"row": 8,
+				"column": 5
+			},
+			"widget_id": 11696010,
+			"account_id": XXXXXXX,
+			"data": [{
+				"nrql": "SELECT latest(followers) FROM ZookeeperSample FACET fullHostname TIMESERIES 1 minute  SINCE 1 hours ago"
+			}],
+			"presentation": {
+				"title": "Number of Zookeeper Followers ( Leader only )",
+				"notes": null
+			}
+		}, {
+			"visualization": "faceted_line_chart",
+			"layout": {
+				"width": 4,
+				"height": 4,
+				"row": 8,
+				"column": 9
+			},
+			"widget_id": 11696011,
+			"account_id": XXXXXXX,
+			"data": [{
+				"nrql": "SELECT latest(pending_syncs) FROM ZookeeperSample FACET fullHostname TIMESERIES 1 minute  SINCE 1 hours ago"
+			}],
+			"presentation": {
+				"title": "Number of Pendings Syncs ( Leader Only )",
+				"notes": null
+			}
+		}, {
+			"visualization": "faceted_line_chart",
+			"layout": {
+				"width": 4,
+				"height": 4,
+				"row": 12,
+				"column": 1
+			},
+			"widget_id": 11696012,
+			"account_id": XXXXXXX,
+			"data": [{
+				"nrql": "SELECT latest(max_latency) FROM ZookeeperSample FACET fullHostname TIMESERIES "
+			}],
+			"presentation": {
+				"title": "Max Latency",
+				"notes": null
+			}
+		}, {
+			"visualization": "faceted_line_chart",
+			"layout": {
+				"width": 4,
+				"height": 4,
+				"row": 12,
+				"column": 5
+			},
+			"widget_id": 11696013,
+			"account_id": XXXXXXX,
+			"data": [{
+				"nrql": "SELECT latest(avg_latency) FROM ZookeeperSample FACET fullHostname TIMESERIES 1 minute  SINCE 1 hours ago"
+			}],
+			"presentation": {
+				"title": "Average latency",
+				"notes": null
+			}
+		}, {
+			"visualization": "faceted_line_chart",
+			"layout": {
+				"width": 4,
+				"height": 4,
+				"row": 12,
+				"column": 9
+			},
+			"widget_id": 11696014,
+			"account_id": XXXXXXX,
+			"data": [{
+				"nrql": "SELECT latest(swapUsedBytes/1000000) FROM SystemSample TIMESERIES FACET `fullHostname` WHERE `fullHostname` LIKE  '%zookeeper%'"
+			}],
+			"presentation": {
+				"title": "System Swap Used ( MB )",
+				"notes": null
+			}
+		}, {
+			"visualization": "faceted_line_chart",
+			"layout": {
+				"width": 12,
+				"height": 5,
+				"row": 16,
+				"column": 1
+			},
+			"widget_id": 11696015,
+			"account_id": XXXXXXX,
+			"data": [{
+				"nrql": "SELECT latest(watch_count),latest(outstanding_requests),latest(open_file_descriptor_count),latest(ephemerals_count),latest(znode_count) FROM ZookeeperSample FACET fullHostname TIMESERIES"
+			}],
+			"presentation": {
+				"title": "Zookeeper Counts",
+				"notes": null
+			}
+		}],
+		"filter": {
+			"event_types": ["ZookeeperSample", "SystemSample", "StorageSample"],
+			"attributes": []
+		}
+	}
+}

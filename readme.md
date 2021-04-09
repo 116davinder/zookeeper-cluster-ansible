@@ -114,10 +114,6 @@ It will enable following things on all nodes.
 
 ### **Tested Ansible Version**
 ```
-ansible 2.7.10
-  config file = None
-  configured module search path = ['/home/davinderpal/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
-  ansible python module location = /usr/local/lib/python3.6/dist-packages/ansible
-  executable location = /usr/local/bin/ansible
-  python version = 3.6.7 (default, Oct 22 2018, 11:32:17) [GCC 8.2.0]
+ansible: 3.2.0
+ansible-base: 2.10.7
 ```

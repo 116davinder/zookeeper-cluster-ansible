@@ -1,7 +1,7 @@
 ---
 
 - name: system upgrade | RedHat
-  yum:
+  ansible.builtin.yum:
     name: "*"
     state: latest
     update_cache: true
@@ -10,12 +10,12 @@
 - block:
 
     - name: system upgrade | Debian
-      apt:
+      ansible.builtin.apt:
         upgrade: dist
         update_cache: true
 
     - name: removing unused packages | Debian
-      apt:
+      ansible.builtin.apt:
         autoclean: true
         autoremove: true
 

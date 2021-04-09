@@ -1,7 +1,7 @@
 variable region {
-  type                    = string
-  default                 = "eu-central-1"
-  description             = "AWS Region"
+  type        = string
+  default     = "eu-central-1"
+  description = "AWS Region"
 }
 
 variable env {
@@ -11,13 +11,8 @@ variable env {
 }
 
 variable vpc_id {
-  type = string
+  type    = string
   default = "vpc-0935362fca368f01f"
-}
-
-variable subnet_id {
-  type = string
-  default = "subnet-00f117908461e14c4"
 }
 
 variable instance_type {
@@ -39,15 +34,15 @@ variable zookeeper_nodes {
 }
 
 variable zookeeper_root_volume_size {
-  type                    = number
-  default                 = 10
-  description             = "how much size of zookeeper root volume is required?"
+  type        = number
+  default     = 10
+  description = "how much size of zookeeper root volume is required in GB?"
 }
 
 variable zookeeper_volume_size {
   type        = number
   default     = 50
-  description = "how much size of zookeeper ebs volume is required?"
+  description = "how much size of zookeeper ebs volume is required in GB?"
 }
 
 variable zookeeper_ebs_attach_location {
@@ -57,7 +52,7 @@ variable zookeeper_ebs_attach_location {
 }
 
 variable ec2_cloudwatch_role {
-  type                    = string
-  default                 = "Zookeeper-CloudWatchAgentServerRole"
-  description             = "aws ec2 cloudwatch role"
+  type        = string
+  default     = "Zookeeper-CloudWatchAgentServerRole"
+  description = "aws ec2 cloudwatch role"
 }

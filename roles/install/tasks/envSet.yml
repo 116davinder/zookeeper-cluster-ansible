@@ -1,7 +1,7 @@
 ---
 
 - name: Setting zookeeper Home | /etc/profile.d/zookeeper.sh
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/profile.d/zookeeper.sh
     mode: 0775
     group: root

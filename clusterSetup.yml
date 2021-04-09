@@ -4,12 +4,12 @@
   gather_facts: true
   pre_tasks:
     - name: Including system upgrade role
-      import_role:
+      ansible.builtin.import_role:
         name: systemUpgrade
       when: systemUpgradeRequired
 
     - name: Including java role
-      import_role:
+      ansible.builtin.import_role:
         name: java
 
   roles:
@@ -23,14 +23,14 @@
   serial: 1
   tasks:
     - name: Starting all nodes
-      import_role:
+      ansible.builtin.import_role:
         name: serviceState
       vars:
         serviceName: zookeeper
         serviceState: started
 
     - name: zookeeper Port Status
-      include_role:
+      ansible.builtin.include_role:
         name: portCheck
       vars:
         PortNumber: "{{ item }}"

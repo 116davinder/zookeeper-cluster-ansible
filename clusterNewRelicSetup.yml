@@ -10,12 +10,12 @@
     zookeeper_nri_pulgin_version: 1.1
   pre_tasks:
     - name: checking newrelic infra agent status ( Redhat / CentOS )
-      shell: "set -o pipefail && rpm -qa | grep newrelic-infra"
+      ansible.builtin.shell: "set -o pipefail && rpm -qa | grep newrelic-infra"
       when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
       register: isNewRelicInfraInstalledYum
 
     - name: checking newrelic infra agent status ( Ubuntu / Debain )
-      shell: "set -o pipefail && apt search newrelic-infra | grep newrelic-infra"
+      ansible.builtin.shell: "set -o pipefail && apt search newrelic-infra | grep newrelic-infra"
       when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
       register: isNewRelicInfraInstalledApt
 

@@ -5,7 +5,7 @@
 #       Not Required: if downloading from local company mirror.
 
 - name: Copying and Unarchive zookeeper tar | {{ zookeeperVersion }}
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ zookeeperTarLocation }}"
     dest: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}"
     owner: "{{ zookeeperUser }}"
@@ -16,7 +16,7 @@
     creates: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}/bin"
 
 - name: Ensuring permissions on unarchieved files
-  file:
+  ansible.builtin.file:
     path: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}"
     owner: "{{ zookeeperUser }}"
     group: "{{ zookeeperGroup }}"

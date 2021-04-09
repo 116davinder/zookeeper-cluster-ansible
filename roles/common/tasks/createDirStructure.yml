@@ -1,13 +1,13 @@
 ---
 
 - name: Creating installing dir | {{ zookeeperInstallDir }}
-  file:
+  ansible.builtin.file:
     path: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}"
     recurse: true
     state: directory
 
 - name: Creating zookeeper directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ zookeeperUser }}"

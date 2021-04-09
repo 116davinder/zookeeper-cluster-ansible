@@ -22,7 +22,7 @@ resource "aws_iam_role" "Zookeeper-CloudWatchAgentServerRole" {
 EOF
 
   tags = {
-    Owner                 = "Terraform"
+    Owner = "Terraform"
   }
 }
 

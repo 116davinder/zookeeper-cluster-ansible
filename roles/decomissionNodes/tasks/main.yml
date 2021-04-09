@@ -1,7 +1,7 @@
 ---
 
 - name: Stoping zookeeper service
-  import_role:
+  ansible.builtin.import_role:
     name: serviceState
   vars:
     serviceName: zookeeper
@@ -9,7 +9,7 @@
   ignore_errors: true
 
 - name: zookeeper Port Status
-  include_role:
+  ansible.builtin.include_role:
     name: portCheck
   vars:
     PortNumber: "{{ item }}"
@@ -18,7 +18,7 @@
     - "{{ zookeeperClientPort }}"
 
 - name: Removing data & log dirs related to installation
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   loop:
@@ -29,7 +29,7 @@
     - "{{ zookeeperLogDir }}"
 
 - name: deleting zookeeper user
-  user:
+  ansible.builtin.user:
     name: "{{ zookeeperUser }}"
     comment: zookeeper Default User
     uid: "{{ zookeeperUserId }}"
@@ -37,7 +37,7 @@
     state: absent
 
 - name: deleting zookeeper group
-  group:
+  ansible.builtin.group:
     name: "{{  zookeeperGroup }}"
     gid: "{{ zookeeperGroupId }}"
     state: absent

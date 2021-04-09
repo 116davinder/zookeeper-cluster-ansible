@@ -1,13 +1,13 @@
 ---
 
 - name: creating zookeeper group
-  group:
+  ansible.builtin.group:
     name: "{{  zookeeperGroup }}"
     gid: "{{ zookeeperGroupId }}"
     state: present
 
 - name: creating zookeeper user
-  user:
+  ansible.builtin.user:
     name: "{{ zookeeperUser }}"
     comment: zookeeper Default User
     uid: "{{ zookeeperUserId }}"

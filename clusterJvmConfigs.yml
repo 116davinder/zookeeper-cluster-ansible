@@ -4,14 +4,14 @@
   gather_facts: true
   serial: 1
   tasks:
-    - include_role:
+    - ansible.builtin.include_role:
         name: configure
         tasks_from: dynamicConfigs
       vars:
         - zookeeperConfigFile: java.env
 
     - name: Restarting all nodes
-      import_role:
+      ansible.builtin.import_role:
         name: serviceState
       vars:
         serviceName: zookeeper
@@ -19,7 +19,7 @@
       when: configStatus.changed
 
     - name: zookeeper port status
-      include_role:
+      ansible.builtin.include_role:
         name: portCheck
       vars:
         PortNumber: "{{ item }}"

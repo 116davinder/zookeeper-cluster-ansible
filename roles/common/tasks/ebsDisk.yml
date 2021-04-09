@@ -1,28 +1,28 @@
 ---
 
 - name: install xfs untils
-  package:
+  ansible.builtin.package:
     name: xfsprogs
     state: present
   ignore_errors: true
 
 - name: check filesystem on given device
-  command: file -s "{{ aws_zookeeper_ebs_device }}"
+  ansible.builtin.command: file -s "{{ aws_zookeeper_ebs_device }}"
   register: zookeeper_ebs_device_status
 
 - name: create filesystem on given device
-  filesystem:
+  community.general.filesystem:
     fstype: "{{ aws_zookeeper_ebs_device_fs }}"
     dev: "{{ aws_zookeeper_ebs_device }}"
   when: zookeeper_ebs_device_status.stdout | regex_search(' data')
 
 - name: create zookeeper ebs mount dir
-  file:
+  ansible.builtin.file:
     path: "{{ aws_zookeeper_ebs_device_mount_location }}"
     state: directory
 
 - name: mount zookeeper ebs volume
-  mount:
+  ansible.posix.mount:
     path: "{{ aws_zookeeper_ebs_device_mount_location }}"
     src: "{{ aws_zookeeper_ebs_device }}"
     fstype: xfs

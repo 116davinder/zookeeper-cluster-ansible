@@ -1,7 +1,7 @@
 ---
 
 - name: Waiting for port | "{{ PortNumber }}" | to be | "{{ PortStatus }}"
-  wait_for:
+  ansible.builtin.wait_for:
     host: "{{ ansible_host }}"
     port: "{{ PortNumber }}"
     state: "{{ PortStatus }}"

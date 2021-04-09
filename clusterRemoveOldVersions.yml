@@ -4,7 +4,7 @@
   gather_facts: false
   tasks:
     - name: Removing Old zookeeper files | {{ zookeeperInstallDir }}/zookeeper-{{ zookeeperOldVersion }}
-      file:
+      ansible.builtin.file:
         path: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperOldVersion }}"
         state: absent
       when:

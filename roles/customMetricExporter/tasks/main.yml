@@ -1,7 +1,7 @@
 ---
 
 - name: copying zooki.py to {{ zookeeperInstallDir }}
-  copy:
+  ansible.builtin.copy:
     src: zooki.py
     dest: "{{ zookeeperInstallDir }}"
     owner: "{{ zookeeperUser }}"
@@ -9,7 +9,7 @@
     mode: 0777
 
 - name: cron for zookeeper metric collector ( zooki.py )
-  cron:
+  ansible.builtin.cron:
     name: "zookeeper metric collector"
     minute: "*"
     hour: "*"

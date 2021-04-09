@@ -1,7 +1,7 @@
 ---
 
 - name: Install Common Utils
-  package:
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
   loop:

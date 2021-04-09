@@ -1,41 +1,41 @@
 ---
 
 - name: install common utils
-  packages:
+  ansible.builtin.packages:
     name: "{{ item }}"
     state: present
   loop:
     - nc
 
 - name: download newrelic pulgin for zookeeper
-  unarchieve:
+  ansible.builtin.unarchieve:
     src: "https://github.com/newrelic/nri-zookeeper/releases/download/{{ zookeeper_nri_pulgin_version }}/zookeeper-plugin-linux-amd64.tar.gz"
     dest: /tmp
     remote_src: true
 
 - name: copying nri-zookeeper binary
-  copy:
+  ansible.builtin.copy:
     src: "/tmp/zookeeper-plugin-{{ zookeeper_nri_pulgin_version }}/bin/nr-zookeeper"
     dest: /var/db/newrelic-infra/newrelic-integrations/bin/
     mode: 0755
 
 - name: copying newrelic zookeeper-definition.yml
-  copy:
+  ansible.builtin.copy:
     src: "/tmp/zookeeper-plugin-{{ zookeeper_nri_pulgin_version }}/zookeeper-definition.yml"
     dest: /var/db/newrelic-infra/newrelic-integrations/
     remote_Src: true
 
 - name: copying zookeeper-config.yml
-  template:
+  ansible.builtin.template:
     src: zookeeper-config.yml
     dest: /etc/newrelic-infra/integrations.d/
 
 - name: restarting newrelic infra agent
-  service:
+  ansible.builtin.service:
     name: newrelic-infra
     state: restarted
 
 - name: remove temp files
-  file:
+  ansible.builtin.file:
     path: "/tmp/zookeeper-plugin-{{ zookeeper_nri_pulgin_version }}"
     state: absent

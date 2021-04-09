@@ -1,7 +1,7 @@
 ---
 
 - name: Creating symlink to latest version | {{ zookeeperVersion }}
-  file:
+  ansible.builtin.file:
     src: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}"
     dest: "{{ zookeeperInstallDir }}/zookeeper"
     owner: "{{ zookeeperUser }}"

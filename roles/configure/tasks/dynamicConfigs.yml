@@ -1,6 +1,6 @@
 ---
 - name: Creating zookeeper configurations | {{ zookeeperConfigFile }}
-  template:
+  ansible.builtin.template:
     src: "{{ zookeeperConfigFile }}"
     dest: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}/conf/{{ zookeeperConfigFile }}"
     owner: "{{ zookeeperUser }}"

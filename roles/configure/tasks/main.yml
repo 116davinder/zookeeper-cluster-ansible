@@ -1,12 +1,12 @@
 ---
 
 - name: Adding Zookeeper ID File | {{ zookeeperDataDir }}/myid
-  template:
+  ansible.builtin.template:
     dest: "{{ zookeeperDataDir }}/myid"
     src: myid
 
 - name: Creating zookeeper configurations
-  include_role:
+  ansible.builtin.include_role:
       name: configure
       tasks_from: dynamicConfigs.yml
   vars:

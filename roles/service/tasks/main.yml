@@ -1,6 +1,6 @@
 ---
 
 - name: Creating Service File | zookeeper
-  template:
+  ansible.builtin.template:
     src: service.j2
     dest: /usr/lib/systemd/system/zookeeper.service

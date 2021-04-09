@@ -4,16 +4,16 @@
   gather_facts: true
   tasks:
     - name: mount ebs volume
-      include_role:
+      ansible.builtin.include_role:
         name: common
         tasks_from: ebsDisk.yml
 
     - name: install & configure cloudwatch logs agent
-      include_role:
+      ansible.builtin.include_role:
         name: cloudwatch
     
     - name: install python3* packages and dependencies
-      package:
+      ansible.builtin.package:
         name: "{{ item }}"
         state: latest
       loop:

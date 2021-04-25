@@ -12,7 +12,7 @@
       ansible.builtin.include_role:
         name: cloudwatch
     
-    - name: install python3* packages and dependencies
+    - name: install python3* packages and other dependencies
       ansible.builtin.package:
         name: "{{ item }}"
         state: latest
@@ -21,3 +21,4 @@
         - python3-pip
         - python3-devel
         - gcc
+        - amazon-linux-extras

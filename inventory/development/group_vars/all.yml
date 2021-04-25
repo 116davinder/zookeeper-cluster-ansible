@@ -2,22 +2,22 @@
 
 systemUpgradeRequired: false
 
-javaVersion: 8
+javaVersion: 11
 updateJava: false # only when you need to update java version
 
 useSystemFirewall: false
 
-zookeeperGroup: zookeeper
-zookeeperUser: zookeeper
+zookeeperGroup: "zookeeper"
+zookeeperUser: "zookeeper"
 zookeeperGroupId: 6000
 zookeeperUserId: 6000
 
-zookeeperInstallDir: /zookeeper
+zookeeperInstallDir: "/zookeeper"
 zookeeperDataDir: "{{ zookeeperInstallDir }}/zookeeper-data"
 zookeeperLogDir: "{{ zookeeperInstallDir }}/zookeeper-logs"
 
 zookeeperVmMaxMapCount: 100000
-zookeeperXms: 256m
+zookeeperXms: "256m"
 zookeeperXmx: "{{ zookeeperXms }}"
 zookeeperTickTime: 2000
 zookeeperInitLimit: 5
@@ -25,17 +25,17 @@ zookeeperSyncLimit: 2
 zookeeperMaxClientCnxns: 60
 zookeeperClientPort: 2181
 
-zookeeperVersion: 3.6.0
+zookeeperVersion: 3.6.3
 zookeeperOldVersion: 3.5.5 # only used in removing old versions
 
 # use local tar only
-zookeeperTarLocation: "/home/davinderpal/apache-zookeeper-{{ zookeeperVersion }}-bin.tar.gz"
+zookeeperTarLocation: "/home/dpal/Downloads/apache-zookeeper-{{ zookeeperVersion }}-bin.tar.gz"
 
 # splunk monitoring
-zookeeperEnvironment: development
+zookeeperEnvironment: "development"
 
 # Only for AWS Based Cluster
-aws_zookeeper_ec2_region: "eu-central-1"
-aws_zookeeper_ebs_device: /dev/xvdc
-aws_zookeeper_ebs_device_fs: xfs
-aws_zookeeper_ebs_device_mount_location: /zookeeper
+aws_zookeeper_ec2_region: "us-east-1"
+aws_zookeeper_ebs_device: "/dev/xvdc"
+aws_zookeeper_ebs_device_fs: "xfs"
+aws_zookeeper_ebs_device_mount_location: "/zookeeper"

@@ -4,7 +4,7 @@
   ansible.builtin.package:
     name: xfsprogs
     state: present
-  ignore_errors: true
+  when: aws_zookeeper_ebs_device_fs | lower == "xfs"
 
 - name: check filesystem on given device
   ansible.builtin.command: file -s "{{ aws_zookeeper_ebs_device }}"
@@ -19,11 +19,11 @@
 - name: create zookeeper ebs mount dir
   ansible.builtin.file:
     path: "{{ aws_zookeeper_ebs_device_mount_location }}"
-    state: directory
+    state: "directory"
 
 - name: mount zookeeper ebs volume
   ansible.posix.mount:
     path: "{{ aws_zookeeper_ebs_device_mount_location }}"
     src: "{{ aws_zookeeper_ebs_device }}"
-    fstype: xfs
-    state: mounted
+    fstype: "{{ aws_zookeeper_ebs_device_fs }}"
+    state: "mounted"

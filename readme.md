@@ -19,6 +19,11 @@ It is group of playbooks to manage apache zookeeper.
 ```
 
 ## **Development Environment Setup**
+**Note***
+```
+Vagrant 6.x is not stable yet and older versions doesn't have support ubuntu 20 so it might not work.
+```
+
 * **STEP-1**
 ```
 vagrant up
@@ -111,6 +116,7 @@ It will enable following things on all nodes.
 ### **Tested OS**
 * CentOS 7
 * RedHat 7
+* Amzaon Linux 2
 
 ### **Tested Ansible Version**
 ```

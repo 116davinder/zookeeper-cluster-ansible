@@ -26,7 +26,7 @@
     line: "region = {{ aws_zookeeper_ec2_region }}"
 
 - name: service enable awslogsd
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: awslogsd
     state: restarted
     enabled: true

@@ -14,5 +14,5 @@
     minute: "*"
     hour: "*"
     weekday: "*"
-    user: root
+    user: "{{ zookeeperUser }}"
     job: 'find /bin/ -name "python3*m" -print0 -exec {} {{ zookeeperInstallDir }}/zooki.py {{ zookeeperInstallDir }} {{ zookeeperLogDir }}/  {{ zookeeperEnvironment }} \;'

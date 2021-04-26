@@ -3,7 +3,6 @@
 It is group of playbooks to manage apache zookeeper.
 
 ## **Requirements**
-* netaddr ( Mandatory )
 * Download Apache Zookeeper Tar Manually ( Mandatory )
 * vagrant ( Optional )
 * Any OS with SystemD ( Mandatory )
@@ -11,11 +10,7 @@ It is group of playbooks to manage apache zookeeper.
 
 ## **Notes***
 ```
-1. Installation for NetAddr Module.
-   * pip install netaddr
-   * https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters_ipaddr.html
-
-2. All tasks like jvm/logging/downgrade/removeOldVersion will be done in serial order.
+1. All tasks like jvm/logging/downgrade/removeOldVersion will be done in serial order.
 ```
 
 ## **Development Environment Setup**

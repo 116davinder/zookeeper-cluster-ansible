@@ -6,11 +6,11 @@
     state: present
   when: aws_zookeeper_ebs_device_fs | lower == "xfs"
 
-- name: check filesystem on given device
+- name: check filesystem on given device | {{ aws_zookeeper_ebs_device }}
   ansible.builtin.command: file -s "{{ aws_zookeeper_ebs_device }}"
   register: zookeeper_ebs_device_status
 
-- name: create filesystem on given device
+- name: create filesystem on given device | {{ aws_zookeeper_ebs_device }}
   community.general.filesystem:
     fstype: "{{ aws_zookeeper_ebs_device_fs }}"
     dev: "{{ aws_zookeeper_ebs_device }}"
@@ -21,7 +21,7 @@
     path: "{{ aws_zookeeper_ebs_device_mount_location }}"
     state: "directory"
 
-- name: mount zookeeper ebs volume
+- name: mount zookeeper ebs volume | {{ aws_zookeeper_ebs_device }}
   ansible.posix.mount:
     path: "{{ aws_zookeeper_ebs_device_mount_location }}"
     src: "{{ aws_zookeeper_ebs_device }}"

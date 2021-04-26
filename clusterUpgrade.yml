@@ -1,13 +1,15 @@
 ---
 
-- hosts: clusterNodes:clusterAddNodes
+- hosts: clusterNodes
   gather_facts: true
+  become: true
   roles:
     - java
     - common
 
-- hosts: clusterNodes:clusterAddNodes
+- hosts: clusterNodes
   gather_facts: true
+  become: true
   tasks:
     - name: installing latest version of Zookeeper
       ansible.builtin.import_role:
@@ -26,18 +28,15 @@
       ansible.builtin.pause:
         prompt: "Press enter to confirm or ctrl-c to cancel"
 
-- hosts: clusterNodes:clusterAddNodes
+- hosts: clusterNodes
   gather_facts: false
+  become: true
   serial: 1
   tasks:
-    - name: switching Zookeeper version to latest
+    - name: switching Zookeeper version to {{ zookeeperVersion }}
       ansible.builtin.import_role:
         name: install
         tasks_from: createSymlink
-
-    - name: updating systemd file if required
-      ansible.builtin.import_role:
-        name: service
 
     - name: restarting all nodes
       ansible.builtin.import_role:
@@ -54,4 +53,3 @@
         PortStatus: started
       loop:
         - "{{ zookeeperClientPort }}"
-        #- "{{ zookeeperNativeTransportPort }}"

@@ -39,7 +39,7 @@ variable "allowed_inbound_client_cidrs" {
 
 variable "instance_type" {
   type        = string
-  default     = "t2.micro"
+  default     = "t3.medium"
   description = "Instance Type"
 }
 

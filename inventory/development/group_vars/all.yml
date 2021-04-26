@@ -25,17 +25,17 @@ zookeeperSyncLimit: 2
 zookeeperMaxClientCnxns: 60
 zookeeperClientPort: 2181
 
-zookeeperVersion: 3.6.3
-zookeeperOldVersion: 3.5.5 # only used in removing old versions
+zookeeperVersion: 3.7.0
+zookeeperOldVersion: 3.6.3 # only used in removing old versions
 
 # use local tar only
 zookeeperTarLocation: "/home/dpal/Downloads/apache-zookeeper-{{ zookeeperVersion }}-bin.tar.gz"
 
-# splunk monitoring
+# splunk/Cloudwatch monitoring
 zookeeperEnvironment: "development"
 
 # Only for AWS Based Cluster
 aws_zookeeper_ec2_region: "us-east-1"
-aws_zookeeper_ebs_device: "/dev/xvdc"
+aws_zookeeper_ebs_device: "/dev/nvme1n1"
 aws_zookeeper_ebs_device_fs: "xfs"
 aws_zookeeper_ebs_device_mount_location: "/zookeeper"

@@ -1,6 +1,6 @@
 ---
 
-- hosts: clusterNodes:clusterAddNodes
+- hosts: clusterNodes
   gather_facts: true
   serial: 1
   tasks:

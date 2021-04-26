@@ -2,6 +2,7 @@
 
 - hosts: clusterNodes
   gather_facts: true
+  become: true
   tasks:
     - name: mount ebs volume
       ansible.builtin.include_role:

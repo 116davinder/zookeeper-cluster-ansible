@@ -1,6 +1,6 @@
 ---
 
-- hosts: clusterNodes:clusterAddNodes
+- hosts: clusterNodes
   gather_facts: false
   tasks:
     - name: Removing Old zookeeper files | {{ zookeeperInstallDir }}/zookeeper-{{ zookeeperOldVersion }}

@@ -59,10 +59,10 @@ class zooki:
                     "ephemerals_count": _MM["ephemerals_count"],
                     "max_latency": _MM["max_latency"],
                     "avg_latency": _MM["avg_latency"],
-                    "synced_followers": _MM["synced_followers"] if _MM["server_state"] == "leader" else 0,
-                    "pending_syncs": _MM["pending_syncs"] if _MM["server_state"] == "leader" else 0,
+                    "synced_followers": _MM["synced_followers"] if "synced_followers" in _MM else 0,
+                    "pending_syncs": _MM["pending_syncs"] if "pending_syncs" in _MM else 0,
                     "version": _MM["version"],
-                    "quorum_size": _MM["quorum_size"],
+                    "quorum_size": _MM["quorum_size"] if "quorum_size" in _MM else 0,
                     "uptime": _MM["uptime"]
                 }
             else:
@@ -78,7 +78,7 @@ def main():
         zMetricFile.write(z.getStorageMetric())
 
     for command in commandPaths:
-        with open(os.path.join(sys.argv[2], command, ".out"), "w") as zMetricFile:
+        with open(os.path.join(sys.argv[2], command + ".out"), "w") as zMetricFile:
             zMetricFile.write(z.getZMetric(command))
 
     with open(os.path.join(sys.argv[2], "monitor.out"), "w") as zMetricFile:

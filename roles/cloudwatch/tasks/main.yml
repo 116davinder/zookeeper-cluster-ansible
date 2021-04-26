@@ -2,26 +2,26 @@
 
 - name: install awslogs agents
   ansible.builtin.package:
-    name: awslogs
-    state: latest
+    name: "awslogs"
+    state: "latest"
     update_cache: true
 
 - name: update location for zookeeper-logs in cloudwtch agent conf
   ansible.builtin.blockinfile:
-      path: /etc/awslogs/awslogs.conf
-      block: |
-        [cloudwatch-zookeeper-logs]
-        time_zone = LOCAL
-        datetime_format = %b %d %H:%M:%S
-        file = {{ zookeeperInstallDir }}/zookeeper-logs/*.out
-        buffer_duration = 5000
-        log_stream_name = {instance_id}
-        initial_position = start_of_file
-        log_group_name = cloudwatch-zookeeper-logs
+    path: "/etc/awslogs/awslogs.conf"
+    block: |
+      [cloudwatch-zookeeper-logs]
+      time_zone = LOCAL
+      datetime_format = %b %d %H:%M:%S
+      file = {{ zookeeperInstallDir }}/zookeeper-logs/*.out
+      buffer_duration = 5000
+      log_stream_name = {instance_id}
+      initial_position = start_of_file
+      log_group_name = zookeeper-{{ zookeeperEnvironment }}-logs
 
 - name: update aws region of clouwatch agent
   ansible.builtin.lineinfile:
-    path: /etc/awslogs/awscli.conf
+    path: "/etc/awslogs/awscli.conf"
     regexp: '^region ='
     line: "region = {{ aws_zookeeper_ec2_region }}"
 

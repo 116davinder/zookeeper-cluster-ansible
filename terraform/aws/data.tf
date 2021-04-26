@@ -13,19 +13,3 @@ data "aws_ami" "amazon_ami" {
   }
 
 }
-
-data "aws_availability_zones" "available" {
-  state = "available"
-}
-
-# it should be private subnets in production environment.
-data "aws_subnet" "public_subnet" {
-  count  = var.zookeeper_nodes
-  vpc_id = var.vpc_id
-  filter {
-    name   = "tag:type"
-    values = ["public"]
-  }
-  availability_zone = data.aws_availability_zones.available.names[count.index % length(data.aws_availability_zones.available.names)]
-
-}

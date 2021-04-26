@@ -1,32 +1,35 @@
 ---
 
-- name: Stoping zookeeper service
-  ansible.builtin.import_role:
-    name: serviceState
+- name: Stoping zookeeper related services
+  ansible.builtin.include_role:
+    name: "serviceState"
   vars:
-    serviceName: zookeeper
-    serviceState: stopped
-  ignore_errors: true
+    serviceName: "{{ item }}"
+    serviceState: "stopped"
+  loop:
+    - "zookeeper"
+    - "awslogsd"
 
 - name: zookeeper Port Status
   ansible.builtin.include_role:
     name: portCheck
   vars:
     PortNumber: "{{ item }}"
-    PortStatus: stopped
+    PortStatus: "stopped"
   loop:
     - "{{ zookeeperClientPort }}"
 
 - name: Removing data & log dirs related to installation
   ansible.builtin.file:
     path: "{{ item }}"
-    state: absent
+    state: "absent"
   loop:
     - "{{ zookeeperInstallDir }}/zookeeper"
     - "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}"
     - "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperOldVersion }}"
     - "{{ zookeeperDataDir }}"
     - "{{ zookeeperLogDir }}"
+    - "{{ zookeeperInstallDir }}/zooki.py"
 
 - name: deleting zookeeper user
   ansible.builtin.user:
@@ -34,10 +37,28 @@
     comment: zookeeper Default User
     uid: "{{ zookeeperUserId }}"
     group: "{{ zookeeperGroup }}"
-    state: absent
+    state: "absent"
 
 - name: deleting zookeeper group
   ansible.builtin.group:
     name: "{{  zookeeperGroup }}"
     gid: "{{ zookeeperGroupId }}"
-    state: absent
+    state: "absent"
+
+- name: remove zookeeper cron
+  ansible.builtin.cron:
+    name: "zookeeper metric collector"
+    state: "absent"
+    user: "{{ zookeeperUser }}"
+
+- name: remove zookeeper systemd file
+  ansible.builtin.file:
+    path: "/usr/lib/systemd/system/zookeeper.service"
+    state: "absent"
+
+- name: unmount zookeeper ebs volume | {{ aws_zookeeper_ebs_device }}
+  ansible.posix.mount:
+    path: "{{ aws_zookeeper_ebs_device_mount_location }}"
+    src: "{{ aws_zookeeper_ebs_device }}"
+    fstype: "{{ aws_zookeeper_ebs_device_fs }}"
+    state: "absent"

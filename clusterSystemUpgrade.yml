@@ -1,6 +1,7 @@
 ---
 
-- hosts: clusterNodes:clusterAddNodes
+- hosts: clusterNodes
   gather_facts: true
+  become: true
   roles:
     - systemUpgrade

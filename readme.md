@@ -3,7 +3,6 @@
 It is group of playbooks to manage apache zookeeper.
 
 ## **Requirements**
-* netaddr ( Mandatory )
 * Download Apache Zookeeper Tar Manually ( Mandatory )
 * vagrant ( Optional )
 * Any OS with SystemD ( Mandatory )
@@ -11,14 +10,15 @@ It is group of playbooks to manage apache zookeeper.
 
 ## **Notes***
 ```
-1. Installation for NetAddr Module.
-   * pip install netaddr
-   * https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters_ipaddr.html
-
-2. All tasks like jvm/logging/downgrade/removeOldVersion will be done in serial order.
+1. All tasks like jvm/logging/downgrade/removeOldVersion will be done in serial order.
 ```
 
 ## **Development Environment Setup**
+**Note***
+```
+Vagrant 6.x is not stable yet and older versions doesn't have support ubuntu 20 so it might not work.
+```
+
 * **STEP-1**
 ```
 vagrant up
@@ -111,6 +111,7 @@ It will enable following things on all nodes.
 ### **Tested OS**
 * CentOS 7
 * RedHat 7
+* Amzaon Linux 2
 
 ### **Tested Ansible Version**
 ```

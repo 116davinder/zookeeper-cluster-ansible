@@ -2,7 +2,7 @@
 
 - hosts: clusterRemoveNodes
   gather_facts: true
-  any_errors_fatal: true
+  ignore_errors: true
   serial: 1
   roles:
     - decomissionNodes

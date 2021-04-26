@@ -1,4 +1,5 @@
-resource "aws_security_group" "zookeeper_sg" {
+resource "aws_security_group" "this" {
+  count       = local.create ? 1 : 0
   name        = "zookeeper-sg-${var.env}"
   description = "Allow Zookeeper traffic"
   vpc_id      = var.vpc_id
@@ -7,14 +8,16 @@ resource "aws_security_group" "zookeeper_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.allowed_inbound_ssh_cidrs
+    description = "allow ssh connections"
   }
 
   ingress {
     from_port   = 2181
     to_port     = 2181
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.allowed_inbound_client_cidrs
+    description = "allow client connections"
   }
 
   egress {
@@ -24,8 +27,5 @@ resource "aws_security_group" "zookeeper_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name = "zookeeper-sg-${var.env}"
-    Env  = var.env
-  }
+  tags = merge(local.tags, map("Name", "zookeeper-sg-${var.env}"))
 }

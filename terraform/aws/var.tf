@@ -76,7 +76,7 @@ variable "zookeeper_ebs_attach_location" {
 variable "associate_public_ip_address" {
   type        = bool
   default     = true
-  description = "do you want to assign public ip to kafka instances?"
+  description = "do you want to assign public ip to zookeeper instances?"
 }
 
 variable "tags" {
@@ -86,5 +86,4 @@ variable "tags" {
     "owner"    = "Terraform"
     "software" = "Apache Zookeeper"
   }
-
 }

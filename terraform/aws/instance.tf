@@ -10,6 +10,7 @@ resource "aws_instance" "this" {
   root_block_device {
     volume_type = "gp2"
     volume_size = var.zookeeper_root_volume_size
+    encrypted   = true
   }
 
   tags = merge(

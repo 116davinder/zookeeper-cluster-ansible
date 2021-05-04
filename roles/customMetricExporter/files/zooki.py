@@ -13,6 +13,7 @@ import json
 import sys
 import os.path
 
+
 class zooki:
     def __init__(self):
         self.zAddr = gethostname()
@@ -23,31 +24,31 @@ class zooki:
     def getStorageMetric(self):
         total, used, free = shutil.disk_usage(sys.argv[1])
         _sMetric = {
-                    "@timestamp": self.cTimeNow,
-                    "command": "disk",
-                    "environment": sys.argv[3],
-                    "totalInGB": total // (2**30),
-                    "usedInGB":  used // (2**30),
-                    "freeInGB": free // (2**30)
-                    }
+            "@timestamp": self.cTimeNow,
+            "command": "disk",
+            "environment": sys.argv[3],
+            "totalInGB": total // (2 ** 30),
+            "usedInGB": used // (2 ** 30),
+            "freeInGB": free // (2 ** 30),
+        }
         return json.dumps(_sMetric)
 
     def getZMetric(self, commandPath):
-        with request.urlopen( self.zHttpAddr + commandPath ) as f:
+        with request.urlopen(self.zHttpAddr + commandPath) as f:
             if f.status == 200:
-                _zMetric = json.loads(f.read().decode('utf-8'))
+                _zMetric = json.loads(f.read().decode("utf-8"))
                 _zMetric["@timestamp"] = self.cTimeNow
                 _zMetric["environment"] = sys.argv[3]
             else:
                 _zMetric = {}
         return json.dumps(_zMetric)
 
-# json retruned by monitor is too big to be handled by splunk indexer
-# so separate function to reduce the json size
+    # json retruned by monitor is too big to be handled by splunk indexer
+    # so separate function to reduce the json size
     def getMonitorMetric(self):
-        with request.urlopen( self.zHttpAddr + "monitor" ) as f:
+        with request.urlopen(self.zHttpAddr + "monitor") as f:
             if f.status == 200:
-                _MM = json.loads(f.read().decode('utf-8'))
+                _MM = json.loads(f.read().decode("utf-8"))
                 _zMetric = {
                     "@timestamp": self.cTimeNow,
                     "environment": sys.argv[3],
@@ -63,15 +64,16 @@ class zooki:
                     "pending_syncs": _MM["pending_syncs"] if "pending_syncs" in _MM else 0,
                     "version": _MM["version"],
                     "quorum_size": _MM["quorum_size"] if "quorum_size" in _MM else 0,
-                    "uptime": _MM["uptime"]
+                    "uptime": _MM["uptime"],
                 }
             else:
                 _zMetric = {}
         return json.dumps(_zMetric)
 
+
 def main():
 
-    commandPaths = ['connections', 'leader', 'watch_summary']
+    commandPaths = ["connections", "leader", "watch_summary"]
 
     z = zooki()
     with open(os.path.join(sys.argv[2], "disk.out"), "w") as zMetricFile:
@@ -83,4 +85,6 @@ def main():
 
     with open(os.path.join(sys.argv[2], "monitor.out"), "w") as zMetricFile:
         zMetricFile.write(z.getMonitorMetric())
+
+
 main()

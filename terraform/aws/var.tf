@@ -39,7 +39,7 @@ variable "allowed_inbound_client_cidrs" {
 
 variable "instance_type" {
   type        = string
-  default     = "t3.medium"
+  default     = "t3a.xlarge"
   description = "Instance Type"
 }
 

@@ -8,18 +8,17 @@
 from urllib import request
 import shutil
 from socket import gethostname
-from datetime import datetime
 import json
 import sys
 import os.path
-
+import pendulum
 
 class zooki:
     def __init__(self):
         self.zAddr = gethostname()
         self.zPort = 8080
         self.zHttpAddr = "http://" + self.zAddr + ":" + str(self.zPort) + "/commands/"
-        self.cTimeNow = str(datetime.now())
+        self.cTimeNow = str(pendulum.now())
 
     def getStorageMetric(self):
         total, used, free = shutil.disk_usage(sys.argv[1])

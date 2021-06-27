@@ -1,5 +1,11 @@
 ---
 
+- name: install zooki.py dependencies
+  ansible.builtin.pip:
+    requirements: "{{ role_path }}/files/requirements.txt"
+    state: present
+  become: true
+
 - name: copying zooki.py to {{ zookeeperInstallDir }}
   ansible.builtin.copy:
     src: zooki.py
@@ -15,4 +21,4 @@
     hour: "*"
     weekday: "*"
     user: "{{ zookeeperUser }}"
-    job: 'find /bin/ -name "python3*m" -print0 -exec {} {{ zookeeperInstallDir }}/zooki.py {{ zookeeperInstallDir }} {{ zookeeperLogDir }}/  {{ zookeeperEnvironment }} \;'
+    job: 'python3 {{ zookeeperInstallDir }}/zooki.py {{ zookeeperInstallDir }} {{ zookeeperLogDir }}/  {{ zookeeperEnvironment }} \;'

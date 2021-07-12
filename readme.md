@@ -44,10 +44,6 @@ ansible-playbook -i inventory/development/cluster.ini clusterSetup.yml
 * `terraform/aws`
 * `terraform/oci`
 
-## **Cloud Infra Using Pulumi**
-
-* `pulumi/aws`
-
 ### **AWS Cloud PreSetup for cluster**
 It will enable following things on all nodes.
 
@@ -113,6 +109,7 @@ It will enable following things on all nodes.
 * CentOS 7
 * RedHat 7
 * Amzaon Linux 2
+* Ubuntu 18/20 ( might work! )
 
 ### **Tested Ansible Version**
 ```

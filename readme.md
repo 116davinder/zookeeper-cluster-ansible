@@ -7,6 +7,7 @@ It is group of playbooks to manage apache zookeeper.
 * vagrant ( Optional )
 * Any OS with SystemD ( Mandatory )
 * Ansible ( Mandatory )
+* `netaddr` python package on ansible controller node.
 
 ## **Notes***
 ```

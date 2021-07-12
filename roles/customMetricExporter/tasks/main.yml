@@ -1,16 +1,5 @@
 ---
 
-- name: copy requirements file
-  ansible.builtin.copy:
-    src: "{{ role_path }}/files/requirements.txt"
-    dest: "/tmp/requirements.txt"
-
-- name: install zooki.py dependencies
-  ansible.builtin.pip:
-    requirements: "/tmp/requirements.txt"
-    state: present
-  become: true
-
 - name: copying zooki.py to {{ zookeeperInstallDir }}
   ansible.builtin.copy:
     src: zooki.py

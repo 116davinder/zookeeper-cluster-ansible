@@ -2,7 +2,7 @@
 
 systemUpgradeRequired: false
 
-javaVersion: 11
+javaVersion: 17
 updateJava: false # only when you need to update java version
 
 useSystemFirewall: false
@@ -16,20 +16,30 @@ zookeeperInstallDir: "/zookeeper"
 zookeeperDataDir: "{{ zookeeperInstallDir }}/zookeeper-data"
 zookeeperLogDir: "{{ zookeeperInstallDir }}/zookeeper-logs"
 
-zookeeperVmMaxMapCount: 100000
+# jvm settings
 zookeeperXms: "256m"
 zookeeperXmx: "{{ zookeeperXms }}"
+ZookeeperJvmFlags: ""
+
+# jmx settings, updated via clusterJvmConfigs.yml
+zookeeperJmxEnabled: true
+zookeeperJmxPort: 9999
+
+zookeeperVmMaxMapCount: 100000
 zookeeperTickTime: 2000
 zookeeperInitLimit: 5
 zookeeperSyncLimit: 2
 zookeeperMaxClientCnxns: 60
 zookeeperClientPort: 2181
 
-zookeeperVersion: 3.7.0
-zookeeperOldVersion: 3.6.3 # only used in removing old versions
+zookeeperPrometheusExporterEnabled: true
+zookeeperPrometheusExporterHttpPort: 7000
+
+zookeeperVersion: 3.8.0
+zookeeperOldVersion: 3.7.1 # only used in removing old versions
 
 # use local tar only
-zookeeperTarLocation: "/home/dpal/Downloads/apache-zookeeper-{{ zookeeperVersion }}-bin.tar.gz"
+zookeeperTarLocation: "/home/davinderpal/Downloads/apache-zookeeper-{{ zookeeperVersion }}-bin.tar.gz"
 
 # splunk/Cloudwatch monitoring
 zookeeperEnvironment: "development"

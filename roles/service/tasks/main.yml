@@ -1,6 +1,13 @@
 ---
 
-- name: Creating Service File | zookeeper
+- name: Creating Service File | zookeeper | RedHat
   ansible.builtin.template:
     src: service.j2
     dest: /usr/lib/systemd/system/zookeeper.service
+  when: ansible_distribution in ['CentOS', 'Red Hat Enterprise Linux', 'RedHat'] | list
+
+- name: Creating Service File | zookeeper | Debian/Ubuntu
+  ansible.builtin.template:
+    src: service.j2
+    dest: /lib/systemd/system/zookeeper.service
+  when: ansible_distribution in ['Debian', 'Ubuntu'] | list

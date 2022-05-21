@@ -5,3 +5,6 @@
   become: true
   roles:
     - java
+
+- name: "Rolling Restart Zookeeper"
+  ansible.builtin.import_playbook: "clusterRollingRestart.yml"

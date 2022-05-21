@@ -15,24 +15,12 @@ It is group of playbooks to manage apache zookeeper.
 ```
 
 ## **Development Environment Setup**
-**Note***
-```
-Vagrant 6.x is not stable yet and older versions doesn't have support ubuntu 20 so it might not work.
-```
-
 * **STEP-1**
 ```
 vagrant up
 ```
-* **STEP-2**
 
-add below lines to `/etc/hosts` file in all nodes.
-```
-192.168.56.101 zookeeper1
-192.168.56.102 zookeeper2
-192.168.56.103 zookeeper3
-```
-* **STEP-3**
+* **STEP-2**
 ```
 ansible-playbook -i inventory/development/cluster.ini clusterSetup.yml
 ```
@@ -105,14 +93,18 @@ It will enable following things on all nodes.
 
 ```ansible-playbook -i inventory/<environment>/cluster.ini clusterRemoveNodes.yml```
 
+### **Tested Zookeeper Versions**
+* `3.7.1`
+* `3.8.0`
+
 ### **Tested OS**
 * CentOS 7
 * RedHat 7
 * Amzaon Linux 2
-* Ubuntu 18/20 ( might work! )
+* Ubuntu 18
 
 ### **Tested Ansible Version**
 ```
-ansible: 3.2.0
-ansible-base: 2.10.7
+ansible==5.7.1
+ansible-core==2.12.5
 ```

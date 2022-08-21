@@ -5,5 +5,5 @@
     host: "{{ ansible_host }}"
     port: "{{ PortNumber }}"
     state: "{{ PortStatus }}"
-    timeout: 300
+    timeout: 180
     delay: 10

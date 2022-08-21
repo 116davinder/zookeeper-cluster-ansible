@@ -16,6 +16,12 @@ zookeeperInstallDir: "/zookeeper"
 zookeeperDataDir: "{{ zookeeperInstallDir }}/zookeeper-data"
 zookeeperLogDir: "{{ zookeeperInstallDir }}/zookeeper-logs"
 
+# zookeeper quorum sasl + Digest-MD5 mutual auth (optional)
+zookeeperQuorumAuthEnableSasl: true
+zookeeperQuorumCnxnThreadsSize: 20
+zookeeperQuorumUsername: "quorum"
+zookeeperQuorumPassword: "IdontKnow"
+
 # jvm settings
 zookeeperXms: "256m"
 zookeeperXmx: "{{ zookeeperXms }}"
@@ -39,7 +45,7 @@ zookeeperVersion: 3.8.0
 zookeeperOldVersion: 3.7.1 # only used in removing old versions
 
 # use local tar only
-zookeeperTarLocation: "/home/davinderpal/Downloads/apache-zookeeper-{{ zookeeperVersion }}-bin.tar.gz"
+zookeeperTarLocation: "/home/davinderpal/projects/zookeeper-cluster-ansible/apache-zookeeper-{{ zookeeperVersion }}-bin.tar.gz"
 
 # splunk/Cloudwatch monitoring
 zookeeperEnvironment: "development"

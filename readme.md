@@ -17,6 +17,7 @@ It is group of playbooks to manage apache zookeeper.
 ## **Development Environment Setup**
 * **STEP-1**
 ```
+vagrant plugin install vagrant-hosts
 vagrant up
 ```
 

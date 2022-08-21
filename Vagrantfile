@@ -6,9 +6,9 @@ Vagrant.configure("2") do |config|
     (1..cluster_nodes).each do |i|
       config.vm.define "zookeeper-#{i}" do |node|
         node.vm.box = "ubuntu/bionic64"
-        node.vm.hostname  = "zookeeper#{i}"
-        node.vm.network :private_network, ip: "192.168.56.10#{i}"
-        #node.vm.provision :hosts, :sync_hosts => true
+        node.vm.hostname  = "zookeeper#{i}.localhost"
+        node.vm.network :private_network, ip: "192.168.56.11#{i}"
+        node.vm.provision :hosts, :sync_hosts => true   # required to autogenerate /etc/hosts on all nodes
       end
   end
   # Setting CPU and Memory for All machines
@@ -16,6 +16,7 @@ Vagrant.configure("2") do |config|
     vb.gui = false
     vb.memory = "512"
     vb.cpus =  1
+    vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ] # used for wsl2
   end
 
 # SSH config to use your local ssh key for auth instead of username/password

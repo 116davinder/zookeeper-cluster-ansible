@@ -17,6 +17,8 @@ zookeeperDataDir: "{{ zookeeperInstallDir }}/zookeeper-data"
 zookeeperLogDir: "{{ zookeeperInstallDir }}/zookeeper-logs"
 
 # zookeeper quorum sasl + Digest-MD5 mutual auth (optional)
+# Note: for fresh clusters it can be set to `true`
+#       but existing clusters must use `clusterMigrateToSasLAuth.yml` playbook for migrations
 zookeeperQuorumAuthEnableSasl: true
 zookeeperQuorumCnxnThreadsSize: 20
 zookeeperQuorumUsername: "quorum"

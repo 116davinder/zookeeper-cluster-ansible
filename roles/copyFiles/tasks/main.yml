@@ -1,0 +1,20 @@
+---
+
+# Ref: https://www.dontpanicblog.co.uk/2021/11/30/securing-a-zookeeper-ensemble/?utm_source=rss&utm_medium=rss&utm_campaign=securing-a-zookeeper-ensemble
+# https://docs.ansible.com/ansible/latest/collections/community/general/java_cert_module.html
+# https://docs.ansible.com/ansible/latest/collections/community/general/java_keystore_module.html
+
+
+# steps 
+# generate RSA key with https://docs.ansible.com/ansible/latest/collections/community/crypto/openssl_privatekey_module.html
+# generate RSA Public Key with https://docs.ansible.com/ansible/latest/collections/community/crypto/openssl_publickey_module.html
+# 
+
+- name: copy files
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default(omit) }}"
+    owner: "{{ zookeeperUser }}"
+    group: "{{ zookeeperGroup }}"
+  loop: "{{ zookeeperCopyFiles }}"

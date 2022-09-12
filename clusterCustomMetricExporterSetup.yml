@@ -1,11 +1,26 @@
 ---
 
-# Command to check Cron: crontab -u root -l
-#Ansible: zookeeper metric collector
-#* * * * * python3 /zookeeper/zooki.py /zookeeper /zookeeper/zookeeper-logs/
+# Command to check Cron: crontab -u zookeeper -l
+# Ansible: zookeeper metric collector
+# * * * * * python3 /zookeeper/zooki.py /zookeeper /zookeeper/zookeeper-logs/ false
 
 - hosts: clusterNodes
-  become: false
-  gather_facts: false
+  become: true
+  gather_facts: true
+  pre_tasks:
+    - name: install common utils
+      ansible.builtin.include_role:
+        name: common
+        tasks_from: commonUtils.yml
+
+    - name: copy python requirements.txt
+      ansible.builtin.copy:
+        src: "roles/customMetricExporter/files/requirements.txt"
+        dest: "/tmp/requirements.txt"
+
+    - name: installing requirements.txt with pip3
+      ansible.builtin.pip:
+        requirements: "/tmp/requirements.txt"
+        executable: pip3
   roles:
     - customMetricExporter

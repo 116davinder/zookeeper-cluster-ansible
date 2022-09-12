@@ -24,12 +24,29 @@ zookeeperQuorumCnxnThreadsSize: 20
 zookeeperQuorumUsername: "quorum"
 zookeeperQuorumPassword: "IdontKnow"
 
+# zookeeper quorum with mtls
+zookeeperSslQuorum: true
+zookeeperSecureClientPort: 2182
+zookeeperSslQuorumReloadCertFiles: "false"
+zookeeperSslQuorumProtocol: "TLSv1.2"
+zookeeperSslQuorumKeystorePassword: "IdontKnow"
+zookeeperSslQuorumTruststorePassword: "IdontKnow"
+zookeeperSslQuorumHostnameVerification: "true"
+zookeeperSslHostnameVerification: "true"
+zookeeperSslQuorumKeystoreLocation: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}/conf/keystore.jks"
+zookeeperSslQuorumTruststoreLocation: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}/conf/truststore.jks"
+zookeeperCopyFiles:
+  - { src: "files/certs/keystore-{{ ansible_fqdn }}.jks", dest: "{{ zookeeperSslQuorumKeystoreLocation }}" }
+  - { src: "files/certs/truststore.jks", dest: "{{ zookeeperSslQuorumTruststoreLocation }}" }
+
+zookeeperAdminPortUnification: "false"
+
 # jvm settings
 zookeeperXms: "256m"
 zookeeperXmx: "{{ zookeeperXms }}"
 ZookeeperJvmFlags: ""
 
-# jmx settings, updated via clusterJvmConfigs.yml
+# jmx settings, updated via clusterConfigsUpdate.yml
 zookeeperJmxEnabled: true
 zookeeperJmxPort: 9999
 

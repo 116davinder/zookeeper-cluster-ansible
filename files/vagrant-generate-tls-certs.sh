@@ -59,7 +59,7 @@ echo
 echo "------------------------------------------------"
 echo "Merge certs into One CA Crt, will be used to scrap admin endpoint"
 echo "------------------------------------------------"
-cat *.cer >> zookeeper-all.crt
+cat ./*.cer >> zookeeper-all.crt
 
 echo
 echo "------------------------------------------------"
@@ -80,4 +80,4 @@ keytool -list -keystore "$cert_path/truststore.jks" -storepass "$key_pass"
 # keytool -printcert -file "$cert_path/zookeeper-all.crt" | grep -A 10 "Certificate\["
 
 # echo remove certs
-rm -rf *.cer
+rm -rf ./*.cer

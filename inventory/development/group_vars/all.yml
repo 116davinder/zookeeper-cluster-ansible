@@ -16,7 +16,7 @@ zookeeperInstallDir: "/zookeeper"
 zookeeperDataDir: "{{ zookeeperInstallDir }}/zookeeper-data"
 zookeeperLogDir: "{{ zookeeperInstallDir }}/zookeeper-logs"
 
-# user generated MyID + FQDN for zoo.cfg are useful incase of MTLS
+# zookeeper user generated MyID + FQDN for zoo.cfg are useful incase of MTLS
 zookeeperUserGeneratedMyId: true
 
 # zookeeper quorum sasl + Digest-MD5 mutual auth (optional)
@@ -29,7 +29,8 @@ zookeeperQuorumPassword: "IdontKnow"
 
 # zookeeper quorum with mtls
 zookeeperSslQuorum: true
-zookeeperSecureClientPort: 2182
+zookeeperPortUnification: "false"
+zookeeperSecureClientPort: 2182 # only defined in zoo.cfg but not used/tested
 zookeeperSslQuorumReloadCertFiles: "false"
 zookeeperSslQuorumProtocol: "TLSv1.2"
 zookeeperSslQuorumKeystorePassword: "IdontKnow"
@@ -42,6 +43,7 @@ zookeeperCopyFiles:
   - { src: "files/certs/keystore-{{ ansible_fqdn }}.jks", dest: "{{ zookeeperSslQuorumKeystoreLocation }}" }
   - { src: "files/certs/truststore.jks", dest: "{{ zookeeperSslQuorumTruststoreLocation }}" }
 
+# zookeeper uncategorized settings
 zookeeperAdminPortUnification: "false"
 
 # jvm settings
@@ -60,9 +62,11 @@ zookeeperSyncLimit: 2
 zookeeperMaxClientCnxns: 60
 zookeeperClientPort: 2181
 
+# zookeeper prometheus settings
 zookeeperPrometheusExporterEnabled: true
 zookeeperPrometheusExporterHttpPort: 7000
 
+# zookeeper versions
 zookeeperVersion: 3.8.0
 zookeeperOldVersion: 3.7.1 # only used in removing old versions
 

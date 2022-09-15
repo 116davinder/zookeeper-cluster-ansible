@@ -78,11 +78,13 @@
   become: true
   serial: 1
   tasks:
-    - name: MigrateToSasL | serverRequireSasl in zoo.cfg
-      ansible.builtin.lineinfile:
-        path: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}/conf/zoo.cfg"
-        regexp: "^quorum.auth.serverRequireSasl="
-        line: "quorum.auth.serverRequireSasl=true"
+    - name: MigrateToSasL | regenerate zoo.cfg with all parameters
+      ansible.builtin.include_role:
+        name: configure
+        tasks_from: dynamicConfigs
+      vars:
+        - zookeeperConfigFile: zoo.cfg
+        - zookeeperQuorumAuthEnableSasl: true
 
     - name: MigrateToSasL | restarting zookeeper
       ansible.builtin.import_role:

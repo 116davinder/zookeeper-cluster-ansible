@@ -1,0 +1,128 @@
+---
+
+# Note:
+#   this is one-time playbook to migrate non-mtls cluster to tls cluster config
+#   Ref: https://zookeeper.apache.org/doc/r3.8.0/zookeeperAdmin.html#Upgrading+existing+nonTLS+cluster
+
+- hosts: clusterNodes
+  gather_facts: true
+  tasks:
+    - name: MigrateToMtls | upload tls keystore and truststore to all nodes
+      ansible.builtin.include_role:
+        name: copyFiles
+
+- hosts: clusterNodes
+  gather_facts: true
+  become: true
+  serial: 1
+  tasks:
+    - name: MigrateToMtls | sslQuourm basic settings in zoo.cfg
+      ansible.builtin.lineinfile:
+        path: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}/conf/zoo.cfg"
+        regexp: "{{ item.regex }}"
+        line: "{{ item.line }}"
+      loop:
+        - { regex: "^sslQuorum=", line: "sslQuorum=false" }
+        - { regex: "^portUnification=", line: "portUnification=true" }
+        - { regex: "^serverCnxnFactory=", line: "serverCnxnFactory=org.apache.zookeeper.server.NettyServerCnxnFactory" }
+        - { regex: "^ssl.quorum.keyStore.password=", line: "ssl.quorum.keyStore.password={{ zookeeperSslQuorumKeystorePassword }}" }
+        - { regex: "^ssl.quorum.keyStore.location=", line: "ssl.quorum.keyStore.location={{ zookeeperSslQuorumKeystoreLocation }}" }
+        - { regex: "^ssl.quorum.trustStore.location=", line: "ssl.quorum.trustStore.location={{ zookeeperSslQuorumTruststoreLocation }}" }
+        - { regex: "^ssl.quorum.trustStore.password=", line: "ssl.quorum.trustStore.password={{ zookeeperSslQuorumTruststorePassword }}" }
+
+    - name: MigrateToMtls | restarting zookeeper
+      ansible.builtin.import_role:
+        name: serviceState
+      vars:
+        serviceName: zookeeper
+        serviceState: restarted
+
+    - name: MigrateToMtls | zookeeper Port Status
+      ansible.builtin.include_role:
+        name: portCheck
+      vars:
+        PortNumber: "{{ item }}"
+        PortStatus: started
+      loop:
+        - "{{ zookeeperClientPort }}"
+
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: please check logs of all nodes that "Creating TLS-enabled quorum server socket" message appears in logs file
+      ansible.builtin.pause:
+        prompt: "Press enter to confirm or ctrl-c to cancel"
+
+- hosts: clusterNodes
+  gather_facts: true
+  become: true
+  serial: 1
+  tasks:
+    - name: MigrateToMtls | sslQuourm enabled in zoo.cfg
+      ansible.builtin.include_role:
+        name: configure
+        tasks_from: dynamicConfigs
+      vars:
+        - zookeeperConfigFile: zoo.cfg
+        - zookeeperSslQuorum: true
+        - zookeeperPortUnification: "true" # force true
+
+    - name: MigrateToMtls | restarting zookeeper
+      ansible.builtin.import_role:
+        name: serviceState
+      vars:
+        serviceName: zookeeper
+        serviceState: restarted
+
+    - name: MigrateToMtls | zookeeper Port Status
+      ansible.builtin.include_role:
+        name: portCheck
+      vars:
+        PortNumber: "{{ item }}"
+        PortStatus: started
+      loop:
+        - "{{ zookeeperClientPort }}"
+
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: please check logs of all nodes that cluster is working
+      ansible.builtin.pause:
+        prompt: "Press enter to confirm or ctrl-c to cancel"
+
+- hosts: clusterNodes
+  gather_facts: true
+  become: true
+  serial: 1
+  tasks:
+    - name: MigrateToMtls | regenerate zoo.cfg and portUnification disabled
+      ansible.builtin.include_role:
+        name: configure
+        tasks_from: dynamicConfigs
+      vars:
+        - zookeeperConfigFile: zoo.cfg
+        - zookeeperSslQuorum: true
+        - zookeeperPortUnification: "false" # force false
+
+    - name: MigrateToMtls | restarting zookeeper
+      ansible.builtin.import_role:
+        name: serviceState
+      vars:
+        serviceName: zookeeper
+        serviceState: restarted
+
+    - name: MigrateToMtls | zookeeper Port Status
+      ansible.builtin.include_role:
+        name: portCheck
+      vars:
+        PortNumber: "{{ item }}"
+        PortStatus: started
+      loop:
+        - "{{ zookeeperClientPort }}"
+
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: please check logs of all nodes that cluster is working
+      ansible.builtin.debug:
+        msg: "please set zookeeperSslQuorum=true and zookeeperPortUnification=false in ansible variables for future updates"

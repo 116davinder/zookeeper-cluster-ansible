@@ -94,13 +94,9 @@ ansible-playbook -i inventory/<environment>/cluster.ini clusterConfigsUpdate.yml
 ```ansible-playbook -i inventory/<environment>/cluster.ini clusterRemoveNodes.yml```
 
 ## **Migration Playbooks**
-
-### **Migrate to Quorum SasL MD5 Auth**
-* Update Required vars in ```inventory/<environment>/group_vars/all.yml``` .
-
-```bash
-ansible-playbook -i inventory/<environment>/cluster.ini clusterMigrateToSasLAuth.yml
-```
+### [Migrate Zookeeper to FQDN based Configurations](./docs/migrate-to-fqdn-based-configs.md)
+### [Migrate Zookeeper to SASL Cluster](./docs/migrate-to-sasl.md)
+### [Migrate Zookeeper to MTLS Quorum Cluster](./docs/migrate-to-mtls.md)
 
 ### **Tested Zookeeper Versions**
 * `3.7.1`
@@ -114,6 +110,6 @@ ansible-playbook -i inventory/<environment>/cluster.ini clusterMigrateToSasLAuth
 
 ### **Tested Ansible Version**
 ```
-ansible==5.7.1
-ansible-core==2.12.5
+ansible==6.1.0
+ansible-core==2.13.2
 ```

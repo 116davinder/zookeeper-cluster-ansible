@@ -49,4 +49,12 @@ Make sure all changes are commited to your version control system.
 
 
 ## Knowns Issues
-* 
+* Missing SAN when using IP Addresses in `zoo.cfg` instead of `fqdn`
+
+```
+javax.net.ssl.SSLPeerUnverifiedException: Certificate for <192.168.56.112> 
+doesn't match any of the subject alternative names: [192.168.56.111, zookeeper1.localhost, localhost]
+        at org.apache.zookeeper.common.ZKHostnameVerifier.matchIPAddress(ZKHostnameVerifier.java:197)
+```
+It can be fixed either by switching to FQDN settings [migrate-to-fqdn-based-configs.md](./migrate-to-fqdn-based-configs.md)
+or your keystore cert must include node IP Address as SAN.

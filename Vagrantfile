@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
         node.vm.box = "ubuntu/bionic64"
         node.vm.hostname  = "zookeeper#{i}.localhost"
         node.vm.network :private_network, ip: "192.168.56.11#{i}"
-        node.vm.provision :hosts, :sync_hosts => true   # required to autogenerate /etc/hosts on all nodes
+        node.vm.provision :hosts, :add_localhost_hostnames => false, :sync_hosts => true   # required to autogenerate /etc/hosts on all nodes
       end
   end
   # Setting CPU and Memory for All machines

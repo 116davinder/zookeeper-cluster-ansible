@@ -15,4 +15,4 @@
     hour: "*"
     weekday: "*"
     user: "{{ zookeeperUser }}"
-    job: 'python3 {{ zookeeperInstallDir }}/zooki.py {{ zookeeperInstallDir }} {{ zookeeperLogDir }}/  {{ zookeeperEnvironment }} \;'
+    job: 'python3 {{ zookeeperInstallDir }}/zooki.py {{ zookeeperInstallDir }} {{ zookeeperLogDir }}/  {{ zookeeperEnvironment }} false \;'

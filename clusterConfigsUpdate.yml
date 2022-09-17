@@ -2,15 +2,20 @@
 
 - hosts: clusterNodes
   gather_facts: true
+  tasks:
+    - name: make sure gather facts is triggered on all nodes required for zoo.cfg
+      ansible.builtin.debug:
+        var: ansible_fqdn
+
+- hosts: clusterNodes
+  gather_facts: true
   serial: 1
   tasks:
     - ansible.builtin.include_role:
         name: configure
         tasks_from: dynamicConfigs
-      vars:
-        - zookeeperConfigFile: log4j.properties
-  
-    - name: restarting all nodes
+
+    - name: Restarting all nodes
       ansible.builtin.import_role:
         name: serviceState
       vars:
@@ -25,6 +30,5 @@
         PortNumber: "{{ item }}"
         PortStatus: started
       loop:
-        - "{{ zookeeperStoragePort }}"
-        - "{{ zookeeperNativeTransportPort }}"
+        - "{{ zookeeperClientPort }}"
       when: configStatus.changed

@@ -17,6 +17,7 @@ It is group of playbooks to manage apache zookeeper.
 ## **Development Environment Setup**
 * **STEP-1**
 ```
+vagrant plugin install vagrant-hosts
 vagrant up
 ```
 
@@ -27,7 +28,7 @@ ansible-playbook -i inventory/development/cluster.ini clusterSetup.yml
 
 ## **Apache Zookeeper Playbooks**
 
-## **Cloud Infra Using Terraform**
+### **Cloud Infra Using Terraform**
 
 * `terraform/aws`
 * `terraform/oci`
@@ -63,15 +64,14 @@ It will enable following things on all nodes.
 
 ```ansible-playbook -i inventory/<environment>/cluster.ini clusterRollingRestart.yml```
 
-### **To update jvm settings of cluster**
+### **To update jvm/logging/zoo.cg/jaas.conf settings of cluster**
 * Update Required vars in ```inventory/<environment>/group_vars/all.yml``` .
-
-```ansible-playbook -i inventory/<environment>/cluster.ini clusterJvmConfigs.yml```
-
-### **To update logging settings of cluster**
-* Update Required vars in ```inventory/<environment>/group_vars/all.yml``` .
-
-```ansible-playbook -i inventory/<environment>/cluster.ini clusterLogging.yml```
+```bash
+ansible-playbook -i inventory/<environment>/cluster.ini clusterConfigsUpdate.yml -e zookeeperConfigFile=zoo.cfg
+ansible-playbook -i inventory/<environment>/cluster.ini clusterConfigsUpdate.yml -e zookeeperConfigFile=java.env
+ansible-playbook -i inventory/<environment>/cluster.ini clusterConfigsUpdate.yml -e zookeeperConfigFile=jaas.conf
+ansible-playbook -i inventory/<environment>/cluster.ini clusterConfigsUpdate.yml -e zookeeperConfigFile=log4j.properties
+```
 
 ### **To upgrade java version of cluster**
 * Update Required vars in ```inventory/<environment>/group_vars/all.yml``` .
@@ -88,10 +88,15 @@ It will enable following things on all nodes.
 
 ```ansible-playbook -i inventory/<environment>/cluster.ini clusterRemoveOldVersion.yml```
 
-### **To remove zookeeper from cluster**
+### **To remove zookeeper cluster**
 * Update Required vars in ```inventory/<environment>/group_vars/all.yml``` .
 
 ```ansible-playbook -i inventory/<environment>/cluster.ini clusterRemoveNodes.yml```
+
+## **Migration Playbooks**
+### [Migrate Zookeeper to FQDN based Configurations](./docs/migrate-to-fqdn-based-configs.md)
+### [Migrate Zookeeper to SASL Cluster](./docs/migrate-to-sasl.md)
+### [Migrate Zookeeper to MTLS Quorum Cluster](./docs/migrate-to-mtls.md)
 
 ### **Tested Zookeeper Versions**
 * `3.7.1`
@@ -105,6 +110,6 @@ It will enable following things on all nodes.
 
 ### **Tested Ansible Version**
 ```
-ansible==5.7.1
-ansible-core==2.12.5
+ansible==6.1.0
+ansible-core==2.13.2
 ```

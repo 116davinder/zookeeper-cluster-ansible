@@ -16,6 +16,7 @@
   roles:
     - common
     - install
+    - copyFiles
     - configure
     - service
 
@@ -39,3 +40,15 @@
         PortStatus: started
       loop:
         - "{{ zookeeperClientPort }}"
+
+    - name: zookeeper Secure Port Status
+      ansible.builtin.include_role:
+        name: portCheck
+      vars:
+        PortNumber: "{{ item }}"
+        PortStatus: started
+      loop:
+        - "{{ zookeeperSecureClientPort }}"
+      when:
+        - zookeeperSslQuorum is defined
+        - zookeeperSslQuorum

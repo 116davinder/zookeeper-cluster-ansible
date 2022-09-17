@@ -9,3 +9,25 @@
     - tar
     - unzip
     - wget
+    - gcc
+
+- name: install python3* packages and dependencies
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - python3
+    - python3-pip
+    - python3-devel
+  when:
+    - ansible_distribution in ['CentOS', 'RedHat'] | list
+
+- name: install python3* packages and dependencies  | Debian
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - python3
+    - python3-pip
+    - python3-dev
+  when: ansible_distribution in ['Debian', 'Ubuntu'] | list

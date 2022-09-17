@@ -1,0 +1,103 @@
+---
+
+# Note:
+#   this is one-time playbook to migrate non-sasl cluster to sasl cluster config
+#   Ref: https://cwiki.apache.org/confluence/display/ZOOKEEPER/Server-Server+mutual+authentication
+
+- hosts: clusterNodes
+  gather_facts: true
+  become: true
+  serial: 1
+  tasks:
+    - name: MigrateToSasL | regenerate jaas.conf
+      ansible.builtin.include_role:
+        name: configure
+        tasks_from: dynamicConfigs
+      vars:
+        - zookeeperConfigFile: jaas.conf
+
+    - name: MigrateToSasL | regenerate java.env to enable jaas.conf
+      ansible.builtin.include_role:
+        name: configure
+        tasks_from: dynamicConfigs
+      vars:
+        - zookeeperConfigFile: java.env
+        - zookeeperQuorumAuthEnableSasl: true
+
+    - name: MigrateToSasL | enableSasl in zoo.cfg
+      ansible.builtin.lineinfile:
+        path: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}/conf/zoo.cfg"
+        regexp: "^quorum.auth.enableSasl="
+        line: "quorum.auth.enableSasl=true"
+
+    - name: MigrateToSasL | restarting zookeeper
+      ansible.builtin.import_role:
+        name: serviceState
+      vars:
+        serviceName: zookeeper
+        serviceState: restarted
+
+    - name: MigrateToSasL | zookeeper Port Status
+      ansible.builtin.include_role:
+        name: portCheck
+      vars:
+        PortNumber: "{{ item }}"
+        PortStatus: started
+      loop:
+        - "{{ zookeeperClientPort }}"
+
+- hosts: clusterNodes
+  gather_facts: true
+  become: true
+  serial: 1
+  tasks:
+    - name: MigrateToSasL | learnerRequireSasl in zoo.cfg
+      ansible.builtin.lineinfile:
+        path: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}/conf/zoo.cfg"
+        regexp: "^quorum.auth.learnerRequireSasl="
+        line: "quorum.auth.learnerRequireSasl=true"
+
+    - name: MigrateToSasL | restarting zookeeper
+      ansible.builtin.import_role:
+        name: serviceState
+      vars:
+        serviceName: zookeeper
+        serviceState: restarted
+
+    - name: MigrateToSasL | zookeeper Port Status
+      ansible.builtin.include_role:
+        name: portCheck
+      vars:
+        PortNumber: "{{ item }}"
+        PortStatus: started
+      loop:
+        - "{{ zookeeperClientPort }}"
+
+- hosts: clusterNodes
+  gather_facts: true
+  become: true
+  serial: 1
+  tasks:
+    - name: MigrateToSasL | regenerate zoo.cfg with all parameters
+      ansible.builtin.include_role:
+        name: configure
+        tasks_from: dynamicConfigs
+      vars:
+        - zookeeperConfigFile: zoo.cfg
+        - zookeeperQuorumAuthEnableSasl: true
+
+    - name: MigrateToSasL | restarting zookeeper
+      ansible.builtin.import_role:
+        name: serviceState
+      vars:
+        serviceName: zookeeper
+        serviceState: restarted
+
+    - name: MigrateToSasL | zookeeper Port Status
+      ansible.builtin.include_role:
+        name: portCheck
+      vars:
+        PortNumber: "{{ item }}"
+        PortStatus: started
+      loop:
+        - "{{ zookeeperClientPort }}"

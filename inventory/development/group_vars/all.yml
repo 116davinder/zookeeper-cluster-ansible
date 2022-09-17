@@ -16,12 +16,42 @@ zookeeperInstallDir: "/zookeeper"
 zookeeperDataDir: "{{ zookeeperInstallDir }}/zookeeper-data"
 zookeeperLogDir: "{{ zookeeperInstallDir }}/zookeeper-logs"
 
+# zookeeper user generated MyID + FQDN for zoo.cfg are useful incase of MTLS
+zookeeperUserGeneratedMyId: true
+
+# zookeeper quorum sasl + Digest-MD5 mutual auth (optional)
+# Note: for fresh clusters it can be set to `true`
+#       but existing clusters must use `clusterMigrateToSasLAuth.yml` playbook for migrations
+zookeeperQuorumAuthEnableSasl: true
+zookeeperQuorumCnxnThreadsSize: 20
+zookeeperQuorumUsername: "quorum"
+zookeeperQuorumPassword: "IdontKnow"
+
+# zookeeper quorum with mtls
+zookeeperSslQuorum: true
+zookeeperPortUnification: "false"
+zookeeperSecureClientPort: 2182 # only defined in zoo.cfg but not used/tested
+zookeeperSslQuorumReloadCertFiles: "false"
+zookeeperSslQuorumProtocol: "TLSv1.2"
+zookeeperSslQuorumKeystorePassword: "IdontKnow"
+zookeeperSslQuorumTruststorePassword: "IdontKnow"
+zookeeperSslQuorumHostnameVerification: "true"
+zookeeperSslHostnameVerification: "true"
+zookeeperSslQuorumKeystoreLocation: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}/conf/keystore.jks"
+zookeeperSslQuorumTruststoreLocation: "{{ zookeeperInstallDir }}/zookeeper-{{ zookeeperVersion }}/conf/truststore.jks"
+zookeeperCopyFiles:
+  - { src: "files/certs/keystore-{{ ansible_fqdn }}.jks", dest: "{{ zookeeperSslQuorumKeystoreLocation }}" }
+  - { src: "files/certs/truststore.jks", dest: "{{ zookeeperSslQuorumTruststoreLocation }}" }
+
+# zookeeper uncategorized settings
+zookeeperAdminPortUnification: "false"
+
 # jvm settings
 zookeeperXms: "256m"
 zookeeperXmx: "{{ zookeeperXms }}"
 ZookeeperJvmFlags: ""
 
-# jmx settings, updated via clusterJvmConfigs.yml
+# jmx settings, updated via clusterConfigsUpdate.yml
 zookeeperJmxEnabled: true
 zookeeperJmxPort: 9999
 
@@ -32,14 +62,16 @@ zookeeperSyncLimit: 2
 zookeeperMaxClientCnxns: 60
 zookeeperClientPort: 2181
 
+# zookeeper prometheus settings
 zookeeperPrometheusExporterEnabled: true
 zookeeperPrometheusExporterHttpPort: 7000
 
+# zookeeper versions
 zookeeperVersion: 3.8.0
 zookeeperOldVersion: 3.7.1 # only used in removing old versions
 
 # use local tar only
-zookeeperTarLocation: "/home/davinderpal/Downloads/apache-zookeeper-{{ zookeeperVersion }}-bin.tar.gz"
+zookeeperTarLocation: "/home/davinderpal/projects/zookeeper-cluster-ansible/apache-zookeeper-{{ zookeeperVersion }}-bin.tar.gz"
 
 # splunk/Cloudwatch monitoring
 zookeeperEnvironment: "development"

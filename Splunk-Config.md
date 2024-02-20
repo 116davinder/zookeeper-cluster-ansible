@@ -5,7 +5,7 @@
 [default]
 host = $HOSTNAME
 
-[monitor:///zookeeper/zookeeper-logs/*.out]
+[monitor:///zookeeper/zookeeper-logs/*]
 disabled = false
 index = kafka
 sourcetype = zookeeper

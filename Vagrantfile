@@ -22,4 +22,5 @@ Vagrant.configure("2") do |config|
 # SSH config to use your local ssh key for auth instead of username/password
   config.ssh.insert_key = false
   config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
+  config.vm.synced_folder '.', '/vagrant', disabled: true
 end

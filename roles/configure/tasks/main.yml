@@ -10,9 +10,9 @@
       name: configure
       tasks_from: dynamicConfigs.yml
   vars:
-    - zookeeperConfigFile: "{{ item }}"
+    zookeeperConfigFile: "{{ item }}"
   loop:
     - zoo.cfg
-    - log4j.properties
     - java.env
     - jaas.conf
+    - logback.xml

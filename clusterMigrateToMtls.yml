@@ -63,9 +63,9 @@
         name: configure
         tasks_from: dynamicConfigs
       vars:
-        - zookeeperConfigFile: zoo.cfg
-        - zookeeperSslQuorum: true
-        - zookeeperPortUnification: "true" # force true
+        zookeeperConfigFile: zoo.cfg
+        zookeeperSslQuorum: true
+        zookeeperPortUnification: "true" # force true
 
     - name: MigrateToMtls | restarting zookeeper
       ansible.builtin.import_role:
@@ -100,9 +100,9 @@
         name: configure
         tasks_from: dynamicConfigs
       vars:
-        - zookeeperConfigFile: zoo.cfg
-        - zookeeperSslQuorum: true
-        - zookeeperPortUnification: "false" # force false
+        zookeeperConfigFile: zoo.cfg
+        zookeeperSslQuorum: true
+        zookeeperPortUnification: "false" # force false
 
     - name: MigrateToMtls | restarting zookeeper
       ansible.builtin.import_role:

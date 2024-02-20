@@ -14,15 +14,15 @@
         name: configure
         tasks_from: dynamicConfigs
       vars:
-        - zookeeperConfigFile: jaas.conf
+        zookeeperConfigFile: jaas.conf
 
     - name: MigrateToSasL | regenerate java.env to enable jaas.conf
       ansible.builtin.include_role:
         name: configure
         tasks_from: dynamicConfigs
       vars:
-        - zookeeperConfigFile: java.env
-        - zookeeperQuorumAuthEnableSasl: true
+        zookeeperConfigFile: java.env
+        zookeeperQuorumAuthEnableSasl: true
 
     - name: MigrateToSasL | enableSasl in zoo.cfg
       ansible.builtin.lineinfile:
@@ -83,8 +83,8 @@
         name: configure
         tasks_from: dynamicConfigs
       vars:
-        - zookeeperConfigFile: zoo.cfg
-        - zookeeperQuorumAuthEnableSasl: true
+        zookeeperConfigFile: zoo.cfg
+        zookeeperQuorumAuthEnableSasl: true
 
     - name: MigrateToSasL | restarting zookeeper
       ansible.builtin.import_role:

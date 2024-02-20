@@ -15,6 +15,7 @@ zookeeperUserId: 6000
 zookeeperInstallDir: "/zookeeper"
 zookeeperDataDir: "{{ zookeeperInstallDir }}/zookeeper-data"
 zookeeperLogDir: "{{ zookeeperInstallDir }}/zookeeper-logs"
+zookeeperLogLevel: "DEBUG"    # DEBUG/INFO/WARN/ERROR/FATAL
 
 # zookeeper user generated MyID + FQDN for zoo.cfg are useful incase of MTLS
 zookeeperUserGeneratedMyId: true
@@ -67,11 +68,11 @@ zookeeperPrometheusExporterEnabled: true
 zookeeperPrometheusExporterHttpPort: 7000
 
 # zookeeper versions
-zookeeperVersion: 3.8.0
-zookeeperOldVersion: 3.7.1 # only used in removing old versions
+zookeeperVersion: 3.9.1
+zookeeperOldVersion: 3.8.0 # only used in removing old versions
 
 # use local tar only
-zookeeperTarLocation: "/home/davinderpal/projects/zookeeper-cluster-ansible/apache-zookeeper-{{ zookeeperVersion }}-bin.tar.gz"
+zookeeperTarLocation: "/home/pox/zookeeper-cluster-ansible/apache-zookeeper-{{ zookeeperVersion }}-bin.tar.gz"
 
 # splunk/Cloudwatch monitoring
 zookeeperEnvironment: "development"

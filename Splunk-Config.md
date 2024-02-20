@@ -1,11 +1,12 @@
 # Splunk Logging Configuration
 
-**Example**
-```
+## Example
+
+```conf
 [default]
 host = $HOSTNAME
 
-[monitor:///zookeeper/zookeeper-logs/*.out]
+[monitor:///zookeeper/zookeeper-logs/*]
 disabled = false
 index = kafka
 sourcetype = zookeeper

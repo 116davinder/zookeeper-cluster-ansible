@@ -4,6 +4,7 @@ Read documentation here: https://zookeeper.apache.org/doc/r3.8.0/zookeeperAdmin.
 
 ### Step 0
 Generate MTLS Certs, if you are testing with vagrant then you can use below-mentioned script else read above-mentioned documenations.
+The following script generates certs in the directory from where you are running the script.
 
 [vagrant-generate-tls-certs.sh](../files/vagrant-generate-tls-certs.sh)
 

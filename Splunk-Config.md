@@ -1,7 +1,8 @@
 # Splunk Logging Configuration
 
-**Example**
-```
+## Example
+
+```conf
 [default]
 host = $HOSTNAME
 

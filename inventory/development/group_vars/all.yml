@@ -68,8 +68,8 @@ zookeeperPrometheusExporterEnabled: true
 zookeeperPrometheusExporterHttpPort: 7000
 
 # zookeeper versions
-zookeeperVersion: 3.8.0
-zookeeperOldVersion: 3.7.1 # only used in removing old versions
+zookeeperVersion: 3.9.1
+zookeeperOldVersion: 3.8.0 # only used in removing old versions
 
 # use local tar only
 zookeeperTarLocation: "/home/pox/zookeeper-cluster-ansible/apache-zookeeper-{{ zookeeperVersion }}-bin.tar.gz"

@@ -84,6 +84,10 @@ ansible-playbook -i inventory/<environment>/cluster.ini clusterConfigsUpdate.yml
 ansible-playbook -i inventory/<environment>/cluster.ini clusterConfigsUpdate.yml -e zookeeperConfigFile=jaas.conf
 ansible-playbook -i inventory/<environment>/cluster.ini clusterConfigsUpdate.yml -e zookeeperConfigFile=logback.xml
 ```
+### **To upgrade zookeeper version of cluster**
+* Update Required vars in ```inventory/<environment>/group_vars/all.yml``` .
+
+```ansible-playbook -i inventory/<environment>/cluster.ini clusterUpgrade.yml```
 
 ### **To upgrade java version of cluster**
 * Update Required vars in ```inventory/<environment>/group_vars/all.yml``` .
@@ -93,7 +97,7 @@ ansible-playbook -i inventory/<environment>/cluster.ini clusterConfigsUpdate.yml
 ### **To upgrade OS version of cluster**
 * Update Required vars in ```inventory/<environment>/group_vars/all.yml``` .
 
-```ansible-playbook -i inventory/<environment>/cluster.ini clusterSystemUpgrade.yml```
+```ansible-playbook -i inventory/<environment>/cluster.ini clusterOSUpgrade.yml```
 
 ### **To remove old version files of zookeeper from cluster**
 * Update Required vars in ```inventory/<environment>/group_vars/all.yml``` .

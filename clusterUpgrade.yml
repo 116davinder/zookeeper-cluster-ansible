@@ -16,6 +16,10 @@
         name: install
         tasks_from: download
 
+    - name: copy mtls/sasl files
+      ansible.builtin.import_role:
+        name: copyFiles
+
     - name: configuring latest Zookeeper version
       ansible.builtin.import_role:
         name: configure

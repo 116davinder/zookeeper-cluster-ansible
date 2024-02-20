@@ -23,7 +23,7 @@
   <!-- Uncomment this if you would like to expose Logback JMX beans -->
   <!--jmxConfigurator /-->
 
-  <property name="zookeeper.console.threshold" value="WARN" />
+  <property name="zookeeper.console.threshold" value="ERROR" />
 
   <property name="zookeeper.log.dir" value="{{ zookeeperLogDir }}" />
   <property name="zookeeper.log.file" value="zookeeper.log" />

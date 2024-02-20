@@ -13,7 +13,7 @@
       [cloudwatch-zookeeper-logs]
       time_zone = LOCAL
       datetime_format = %b %d %H:%M:%S
-      file = {{ zookeeperInstallDir }}/zookeeper-logs/*.out
+      file = {{ zookeeperInstallDir }}/zookeeper-logs/*
       buffer_duration = 5000
       log_stream_name = {instance_id}
       initial_position = start_of_file

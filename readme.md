@@ -15,10 +15,22 @@ It is group of playbooks to manage apache zookeeper.
 ```
 
 ## **Development Environment Setup**
+
+* **STEP-0**
+[Vagrant-Readme.md](./docs/vagrant-notes.md)
+
 * **STEP-1**
 ```
-vagrant plugin install vagrant-hosts
 vagrant up
+```
+
+Generate MTLS Certs/JKS Files
+```bash
+mkdir files/certs/
+
+cd files/certs/
+
+../vagrant-generate-tls-certs.sh
 ```
 
 * **STEP-2**
@@ -70,7 +82,7 @@ It will enable following things on all nodes.
 ansible-playbook -i inventory/<environment>/cluster.ini clusterConfigsUpdate.yml -e zookeeperConfigFile=zoo.cfg
 ansible-playbook -i inventory/<environment>/cluster.ini clusterConfigsUpdate.yml -e zookeeperConfigFile=java.env
 ansible-playbook -i inventory/<environment>/cluster.ini clusterConfigsUpdate.yml -e zookeeperConfigFile=jaas.conf
-ansible-playbook -i inventory/<environment>/cluster.ini clusterConfigsUpdate.yml -e zookeeperConfigFile=log4j.properties
+ansible-playbook -i inventory/<environment>/cluster.ini clusterConfigsUpdate.yml -e zookeeperConfigFile=logback.xml
 ```
 
 ### **To upgrade java version of cluster**
@@ -101,6 +113,7 @@ ansible-playbook -i inventory/<environment>/cluster.ini clusterConfigsUpdate.yml
 ### **Tested Zookeeper Versions**
 * `3.7.1`
 * `3.8.0`
+* `3.9.1`
 
 ### **Tested OS**
 * CentOS 7
@@ -110,6 +123,6 @@ ansible-playbook -i inventory/<environment>/cluster.ini clusterConfigsUpdate.yml
 
 ### **Tested Ansible Version**
 ```
-ansible==6.1.0
-ansible-core==2.13.2
+ansible==9.2.0
+ansible-core==2.16.3
 ```
